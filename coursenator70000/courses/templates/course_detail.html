@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div>
+    <p>Название:{{ course.title }}</p>
+    {{ course.description }}
+    <br>
+    {{ course.price }}
+    <br>
+    {% if course.is_linear %}
+    <span>{{ course.is_linear }}</span>
+    {% endif %}
+</div>
+<div>
+<!--    {% if user.is_staff %}-->
+<!--    {% endif %}-->
+    <a href="{% url 'course_update' course.id %}">Change</a>
+</div>
+{% endblock %}

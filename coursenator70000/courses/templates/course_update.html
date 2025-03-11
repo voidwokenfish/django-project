@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div>
+    <center>
+        <div class="course_update">
+            <h1>Редактирование курса</h1> <br>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.title }}<br>
+                <span color="red"> {{ error }} </span>
+                <button class="btn btn-success" type="submit">Изменить</button>
+            </form>
+        </div>
+    </center>
+</div>
+{% endblock %}
