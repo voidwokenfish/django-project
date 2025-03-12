@@ -6,6 +6,7 @@ class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(upload_to='courses_images/', null=True, blank=True, default='default.jpg')
     is_linear = models.BooleanField() # Нужно ли студенту на данном курсе завершать урок, чтобы перейти к следующему
 
     def __str__(self):
@@ -33,7 +34,7 @@ class Lesson(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
     title = models.TextField()
     number = models.IntegerField()
-    video_url = models.URLField() # Возможно хранить не сам файл, а ссылку на него, например с Ютуба?
+    video_url = models.URLField()
     lesson_details = models.TextField()
 
     def __str__(self):

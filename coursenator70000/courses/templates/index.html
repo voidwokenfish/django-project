@@ -1,14 +1,20 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Главная страница{% endblock %}
 {% block content %}
-<div>
+<h1 class="catalog_title">
+    Каталог курсов
+</h1>
+<div class="courses_collection">
     {% for course in courses %}
-        <div>
-            <a href="{% url 'course_details' course.id %}" >{{ course.title }}</a>
-            <br>
-            {{ course.description }}
+        <div class="course_card">
+            <a href="{% url 'course_detail' course.id %}" >
+            <span class="card_title">{{ course.title }}</span>
+                <br>
+            <span>{{ course.description }}</span>
+            <img src="{{ course.image.url }}" alt="Картинка для {{ course.title }}">
+            </a>
         </div>
-        <br>
     {% endfor %}
 </div>
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
+{% block title %}Курс {{ course.title }}{% endblock %}
 {% block content %}
 <div>
-    <p>Название:{{ course.title }}</p>
+    <p>Название: {{ course.title }}</p>
     {{ course.description }}
     <br>
     {{ course.price }}
@@ -10,6 +10,16 @@
     {% if course.is_linear %}
     <span>{{ course.is_linear }}</span>
     {% endif %}
+</div>
+<div>
+    <h3>
+        Модули
+    </h3>
+    {% for module in modules %}
+        <div>
+            <a href="{% url 'module_detail' module.id %}" >{{ module.title }}</a>
+        </div>
+    {% endfor %}
 </div>
 <div>
 <!--    {% if user.is_staff %}-->

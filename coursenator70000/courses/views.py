@@ -1,6 +1,6 @@
 from django import http
 from django.shortcuts import render
-from .models import Course
+from .models import Course, Module, Lesson
 from django.views.generic import UpdateView
 from django.urls import reverse
 
@@ -11,7 +11,17 @@ def index(request):
 
 def course_detail(request, pk):
     course = Course.objects.get(pk=pk)
-    return render(request, 'course_detail.html', context={"course": course})
+    modules = course.module_set.all()
+    return render(request, 'course_detail.html', context={"course": course, "modules": modules})
+
+def module_detail(request, pk):
+    module = Module.objects.get(pk=pk)
+    lessons = module.lesson_set.all()
+    return render(request, 'module_detail.html', context={"module": module, "lessons": lessons})
+
+def lesson_detail(request, pk):
+    lesson = Lesson.objects.get(pk=pk)
+    return render(request, 'lesson_detail.html', context={"lesson": lesson})
 
 class CourseUpdateView(UpdateView):
     model = Course
