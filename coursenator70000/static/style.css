@@ -1,36 +1,134 @@
-.catalog_title {
+
+.navbar {
+    position: fixed;
+    top: 6px;
+    left: 0;
+    right: 0;
+    max-width: 1426px;
+    width: 100%;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.8); /* прозрачный белый фон */
+    display: flex;
+    justify-content: space-between; /* название слева, меню по центру */
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: 1px solid white; /* рамка */
+    border-radius: 6px;
+    box-sizing: border-box; /*padding не увеличивают размеры */
+    z-index: 1000;
+    margin: 0 auto; /* чтобы было в центре */
+}
+
+.navbar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    gap: 20px;
+}
+
+.navbar__list a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s ease; /* изменение цвета */
+}
+
+.navbar__list a:hover {
+    color: blue;
+}
+
+
+.catalog-title {
+    padding-left: 12px;
+    padding-right: 12px;
     font-size: 64px;
     font-weight: bold;
+    max-width: 1426px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 60px;
 }
 
-.card_title {
-    font-weight: bold;
+.courses-collection {
+    display: grid;
+    max-width: 1426px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Автоматически создаёт столбцы */
+    gap: 20px; /* отступы между карточками */
+    grid-auto-rows: 1fr;
+    margin: 0 auto; /* чтобы было в центре */
+    padding: 20px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
-.course_card{
+.course-card {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 1px;
-    background-color: rgba(0, 255, 255, 0.1);
+    background-color: rgba(0, 0, 255, 0.1);
     border: 1px solid #ddd;
     position: relative;
+    padding: 16px;
+    border-radius: 10px;
 }
 
-.course_card a {
+.course-card__title {
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 16px;
+}
+
+.course-card__description{
+    margin: 0;
+}
+
+@media (min-width: 721px) {
+    .course-card__main {
+        margin: 0;
+        margin-top: 4px;
+        align-self: center;
+    }
+}
+
+@media (max-width: 720px) {
+    .course-card__main {
+        display: none;
+    }
+}
+.course-card__footer{
+    margin: 0;
+    margin-top: 12px;
+}
+
+.course-card__price{
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+}
+
+.course-card__link{
+    position: absolute;
     text-decoration: none;
     color: inherit;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
 }
 
-.course_card img {
+.course-card img {
     width: 300px;
     height: 200px;
     border-radius: 10px;
     padding-top: 20px;
 }
 
-.courses_collection {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Автоматически создаёт столбцы с минимальной шириной 300px */
-    gap: 20px; /* Отступы между карточками */
-    grid-auto-rows: 1fr;
-}
+
+

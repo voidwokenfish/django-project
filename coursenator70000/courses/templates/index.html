@@ -2,18 +2,32 @@
 {% load static %}
 {% block title %}Главная страница{% endblock %}
 {% block content %}
-<h1 class="catalog_title">
+<h1 class="catalog-title">
     Каталог курсов
 </h1>
-<div class="courses_collection">
+<div class="courses-collection">
     {% for course in courses %}
-        <div class="course_card">
-            <a href="{% url 'course_detail' course.id %}" >
-            <span class="card_title">{{ course.title }}</span>
-                <br>
-            <span>{{ course.description }}</span>
-            <img src="{{ course.image.url }}" alt="Картинка для {{ course.title }}">
-            </a>
+        <div class="course-card">
+            <header class="course-card__header">
+                <div class="course-card__tag">
+
+                </div>
+                <h2 class="course-card__title">
+                    {{ course.title }}
+                </h2>
+                <p class="course-card__description">
+                    {{ course.description }}
+                </p>
+            </header>
+            <div class="course-card__main">
+                <img src="{{ course.image.url }}" alt="Картинка для {{ course.title }}">
+            </div>
+            <footer class="course-card__footer">
+                <p class="course-card__price">
+                    {{ course.price }} Руб.
+                </p>
+            </footer>
+            <a class="course-card__link" href="{% url 'course_detail' course.id %}" ></a>
         </div>
     {% endfor %}
 </div>

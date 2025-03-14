@@ -36,5 +36,5 @@ class CourseUpdateView(UpdateView):
         return http.HttpResponseRedirect(reverse('course_detail', kwargs={'pk': self.object.pk}))
 
     def form_invalid(self, form):
-        pass
+        return self.render_to_response(self.get_context_data(form=form))
 

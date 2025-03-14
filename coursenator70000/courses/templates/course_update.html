@@ -7,9 +7,19 @@
             <h1>Редактирование курса</h1> <br>
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.title }}<br>
-                <span color="red"> {{ error }} </span>
-                <button class="btn btn-success" type="submit">Изменить</button>
+                {{ form.as_p }}
+
+                {% if form.errors %}
+                    <div class="errors">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <button type="submit">Изменить</button>
             </form>
         </div>
     </center>
