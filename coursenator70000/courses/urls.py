@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, course_detail, CourseUpdateView, module_detail, lesson_detail
+from .views import index, course_detail, CourseUpdateView, module_detail, lesson_detail, httptest
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -9,6 +9,7 @@ urlpatterns = [
     path('course/<int:pk>/update', CourseUpdateView.as_view(), name='course_update'),
     path('course/module/<int:pk>', module_detail, name='module_detail'),
     path('course/module/lesson/<int:pk>', lesson_detail, name='lesson_detail'),
+    path('test', httptest, name='httptest'),
 ]
 
 if settings.DEBUG:

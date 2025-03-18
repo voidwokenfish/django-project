@@ -38,3 +38,15 @@ class CourseUpdateView(UpdateView):
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
 
+
+def httptest(request):
+    q = Course.objects.get(id=2)
+    q2 = Course.objects.all()
+    q3 = q2.first()
+    q4 = Course.objects.in_bulk()
+    print(q4)
+    print(q3)
+    print(q2.query) #Получить запрос
+    print(q)
+    print(q.price)
+    return http.HttpResponse('test')

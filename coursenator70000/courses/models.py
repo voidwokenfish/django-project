@@ -45,11 +45,13 @@ class Lesson(models.Model):
         verbose_name_plural = "Уроки"
 
 
-class Topic(models.Model):
+class Topic(models.Model): #тема для курсов чтобы пользователь мог найти по темам
     title = models.TextField()
     description = models.TextField()
     image = models.ImageField(upload_to="topics")
     is_active = models.BooleanField() # Досупен ли курс, мб на переработке
+
+    #Добавить класс m2m чтобы привязать к курсам
 
     def __str__(self):
         return self.title
