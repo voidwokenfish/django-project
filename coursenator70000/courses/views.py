@@ -1,6 +1,10 @@
+from django.utils import timezone
+
 from django import http
-from django.shortcuts import render
-from .models import Course, Module, Lesson
+from django.shortcuts import render, redirect
+from django.template.context_processors import request
+
+from .models import Course, Module, Lesson, Enrollment
 from django.views.generic import UpdateView
 from django.urls import reverse
 
@@ -50,3 +54,11 @@ def httptest(request):
     print(q)
     print(q.price)
     return http.HttpResponse('test')
+
+def enroll_student(request, pk):
+    if request.user.is_authenticated:
+        course = Course.objects.get(pk=pk)
+        Enrollment.objects.create(user=request.user, course=course, enroll_date=timezone.now().date())
+        return redirect('course_detail', pk=pk)
+    else:
+        return redirect('login')

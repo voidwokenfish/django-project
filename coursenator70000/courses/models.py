@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
 
 
 class Course(models.Model):
@@ -63,7 +64,7 @@ class Topic(models.Model): #тема для курсов чтобы пользо
 
 class Enrollment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     enroll_date = models.DateField()
 
     def __str__(self):

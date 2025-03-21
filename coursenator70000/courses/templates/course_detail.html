@@ -1,25 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Курс {{ course.title }}{% endblock %}
 {% block content %}
-<div>
-    <p>Название: {{ course.title }}</p>
-    {{ course.description }}
-    <br>
-    {{ course.price }}
-    <br>
-    {% if course.is_linear %}
-    <span>{{ course.is_linear }}</span>
-    {% endif %}
+<div class="course-detail">
+    <h2 class="course-title">{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
 </div>
-<div>
-    <h3>
-        Модули
-    </h3>
+<div class="modules-collection">
     {% for module in modules %}
-        <div>
-            <a href="{% url 'module_detail' module.id %}" >{{ module.title }}</a>
+        <div class="module-container">
+            <h3 class="module-container__title">{{ module.title }}</h3>
+            <p> затычка уроков затычка тестов </p>
+            <a href="{% url 'module_detail' module.id %}" ></a>
         </div>
     {% endfor %}
+</div>
+<div>
+    {% if user.is_authenticated %}
+        <form action="{% url 'enroll_student' pk=course.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Начать учиться</button>
+        </form>
+    {% endif %}
 </div>
 <div>
 <!--    {% if user.is_staff %}-->

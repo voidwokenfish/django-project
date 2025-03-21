@@ -14,6 +14,16 @@
             <li><a href="/">Главная</a></li>
             <li><a href="/">О нас</a></li>
         </ul>
+        {% if user.is_authenticated %}
+            <p>Привет, {{ user.username }}!</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+            <a href="{% url 'register' %}">Регистрация</a>
+        {% endif %}
     </nav>
 </header>
 <main>

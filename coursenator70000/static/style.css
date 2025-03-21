@@ -130,5 +130,48 @@
     padding-top: 20px;
 }
 
+.course-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 1426px;
+    width: 100%;
+    height: 48px;
+    border-radius: 10px;
+    align-self: center;
+    margin: 0 auto;
+    margin-top: 90px;
+}
+
+.modules-collection {
+    max-width: 1426px;
+    margin: 0 auto;
+    gap: 10px;
+    padding: 20px;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin: 0 auto;
+}
+
+.module-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    max-width: 1426px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #ddd;
+    position: relative;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.module-container__title {
+    font-size: 24px;
+    margin: 0;
+}
+
 
 
