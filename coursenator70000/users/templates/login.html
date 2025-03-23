@@ -4,7 +4,16 @@
 <h2>Вход</h2>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div>
+        <label class="" for='{{ form.email.id_for_label }}'>
+            email
+        </label>
+        {{ form.email }}
+        <label class="" for='{{ form.password.id_for_label }}'>
+            password
+        </label>
+        {{ form.password }}
+    </div>
     <button type="submit">Войти!</button>
 </form>
 

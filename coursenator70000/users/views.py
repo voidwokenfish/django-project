@@ -1,8 +1,10 @@
 from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 
-from .forms import RegisterForm
+from .forms import RegisterForm, LoginForm
+
+from django.contrib import auth
+from django.urls import reverse
 
 
 # Create your views here.
@@ -12,21 +14,25 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('index')
 
     else:
-        form = RegisterForm() #это для чего?) типа первый заход пустая форма?
+        form = RegisterForm() #При GET запросе
 
     return render(request, 'register.html', {'form': form})
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('home')
+            print(request.POST)
+            email = request.POST['username']
+            password = request.POST['password']
+            user = auth.authenticate(email=email, password=password)
+            if user:
+                auth.login(request, user)
+                return HttpResponseRedirect(reverse('index'))
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
 
     return render(request, 'login.html', {'form': form})

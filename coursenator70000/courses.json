@@ -1,0 +1,107 @@
+[
+  {
+    "model": "courses.course",
+    "pk": 1,
+    "fields": {
+      "title": "Money Maker",
+      "description": "Discover the mysteries of money!",
+      "price": "999.99",
+      "image": "courses_images/MoneyMakerLogo_tI0A8Qs.png",
+      "is_linear": true
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 2,
+    "fields": {
+      "title": "How To Talk To A Woman",
+      "description": "you will be able to talk cool cool",
+      "price": "999999.99",
+      "image": "courses_images/BAKA_o5YDF49.png",
+      "is_linear": true
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 4,
+    "fields": {
+      "title": "How to Be Sigma",
+      "description": "You will learn how to become Sigma",
+      "price": "5999.00",
+      "image": "courses_images/sigma_wydcoqu.png",
+      "is_linear": true
+    }
+  },
+  {
+    "model": "courses.course",
+    "pk": 5,
+    "fields": {
+      "title": "300x200",
+      "description": "300x200 testing",
+      "price": "99.00",
+      "image": "courses_images/image-alignment-300x200.png",
+      "is_linear": false
+    }
+  },
+  {
+    "model": "courses.module",
+    "pk": 1,
+    "fields": {
+      "course": 1,
+      "title": "���� � �������",
+      "number": 1
+    }
+  },
+  {
+    "model": "courses.module",
+    "pk": 2,
+    "fields": {
+      "course": 1,
+      "title": "���������� �����",
+      "number": 2
+    }
+  },
+  {
+    "model": "courses.module",
+    "pk": 3,
+    "fields": {
+      "course": 1,
+      "title": "����� �������� ������� �����",
+      "number": 3
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 1,
+    "fields": {
+      "module": 1,
+      "title": "��� ����� ������",
+      "number": 1,
+      "video_url": "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+      "lesson_details": "� ���� ����� �� ������� ��� ����� ������!"
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 2,
+    "fields": {
+      "module": 2,
+      "title": "��� �������� ���������� �����",
+      "number": 1,
+      "video_url": "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+      "lesson_details": "� ���� ����� �� ������� ��� �������� ���������� �����"
+    }
+  },
+  {
+    "model": "courses.lesson",
+    "pk": 3,
+    "fields": {
+      "module": 3,
+      "title": "����� 1",
+      "number": 1,
+      "video_url": "https://www.youtube.com/watch?v=xvFZjo5PgG0",
+      "lesson_details": "��������� ����� �� ������� ������ ����� ��������!"
+    }
+  }
+
+]
