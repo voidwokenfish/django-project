@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Квиз {{quiz.number }}{% endblock %}
+{% block content %}
+<div class="quiz_detail">
+    <div class="quiz_detail__header">
+        <h2 class="quiz_detail__title">{{ quiz.title }}</h2>
+        <button type="submit">Начать</button>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="quiz">
+            {% for form in forms %}
+                <label class="quiz__question" for='{{ form.question.id_for_label }}'>
+                    {{ form.question }}
+                </label>
+
+                {% for answer in form.answer %}
+                    <label class="quiz__answer" for='{{ form.answer.id_for_label }}'>
+                        {{ answer }}
+                    </label>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <button type="submit">Завершить квиз</button>
+    </form>
+</div>
+{% endblock %}

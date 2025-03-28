@@ -39,8 +39,9 @@ class Lesson(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
     title = models.TextField()
     number = models.IntegerField()
-    video_url = models.URLField()
+    video_url = models.URLField(blank=True)
     lesson_details = models.TextField()
+    course_order = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

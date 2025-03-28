@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from .views import index, course_detail, CourseUpdateView, module_detail, lesson_detail, httptest, enroll_student
 from django.conf import settings
 from django.conf.urls.static import static

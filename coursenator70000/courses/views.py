@@ -1,3 +1,5 @@
+from django.db.models import Max
+
 from django.utils import timezone
 
 from django import http
@@ -8,6 +10,9 @@ from .models import Course, Module, Lesson, Enrollment
 from django.views.generic import UpdateView
 from django.urls import reverse
 
+from users.models import UserLessonCompleted, UserQuizAttempt
+from quizzes.models import Quiz
+
 
 def index(request):
     courses = Course.objects.all()
@@ -16,12 +21,42 @@ def index(request):
 def course_detail(request, pk):
     course = Course.objects.get(pk=pk)
     modules = course.module_set.all()
-    return render(request, 'course_detail.html', context={"course": course, "modules": modules})
+    if request.user.is_authenticated:
+        enrolled = Enrollment.objects.filter(course=course, user=request.user).exists()
+    else:
+        enrolled = False
+    return render(request, 'course_detail.html', context={"course": course, "modules": modules, "enrolled": enrolled})
+
 
 def module_detail(request, pk):
     module = Module.objects.get(pk=pk)
-    lessons = module.lesson_set.all()
-    return render(request, 'module_detail.html', context={"module": module, "lessons": lessons})
+
+    lessons = list(module.lesson_set.all())
+    quizzes = list(Quiz.objects.filter(course=module.course))
+
+    # Объединяем уроки и тесты, сортируя по course_order
+    content_items = sorted(
+        [{"type": "lesson", "obj": lesson} for lesson in lessons] +
+        [{"type": "quiz", "obj": quiz} for quiz in quizzes],
+        key=lambda x: x["obj"].course_order
+    )
+
+    completed_lessons = UserLessonCompleted.objects.filter(
+        student=request.user, lesson__in=lessons
+    ).values_list("lesson_id", flat=True)
+
+    max_scores = UserQuizAttempt.objects.filter(student=request.user).values('quiz').annotate(
+        max_score=Max('score'))
+    user_scores = {item['quiz']: item['max_score'] for item in max_scores}
+    completed_quizzes = {quiz.id for quiz in quizzes if user_scores.get(quiz.id, 0) >= quiz.pass_score}
+
+    return render(request, 'module_detail.html', {
+        "module": module,
+        "content_items": content_items,
+        "completed_lessons": completed_lessons,
+        "completed_quizzes": completed_quizzes,
+    })
+
 
 def lesson_detail(request, pk):
     lesson = Lesson.objects.get(pk=pk)

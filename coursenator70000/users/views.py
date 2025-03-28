@@ -13,8 +13,7 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('index')
+            return redirect('login')
 
     else:
         form = RegisterForm() #При GET запросе
@@ -26,9 +25,9 @@ def user_login(request):
         form = LoginForm(data=request.POST)
         if form.is_valid():
             print(request.POST)
-            email = request.POST['username']
+            username = request.POST['username']
             password = request.POST['password']
-            user = auth.authenticate(email=email, password=password)
+            user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))

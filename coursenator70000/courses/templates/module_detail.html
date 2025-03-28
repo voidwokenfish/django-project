@@ -1,14 +1,32 @@
 {% extends "base.html" %}
 {% block title %}{% endblock %}
 {% block content %}
-<div>
-  <p>{{ module.title }}</p>
-  <div>
-    {% for lesson in lessons %}
-    <div>
-      <a href="{% url 'lesson_detail' lesson.id %}" >{{ lesson.title }}</a>
+<div class="module-detail">
+  <h2 class="module-detail__title">{{ module.title }}</h2>
+  <p class="module-detail__desc">Уроки-квизы-уроки-квизы</p>
+</div>
+<div class="lesson-collection">
+    {% for item in content_items %}
+    <div class="content-container">
+        <a href="
+            {% if item.type == 'lesson' %}
+                {% url 'lesson_detail' item.obj.id %}
+            {% else %}
+                {% url 'quiz_detail' item.obj.id %}
+            {% endif %}"
+            class="content-container__link">
+            {{ item.obj.title }}
+        </a>
+
+        <input type="checkbox"
+            {% if item.type == 'lesson' and item.obj.id in completed_lessons %}
+                checked
+            {% elif item.type == 'quiz' and item.obj.id in completed_quizzes %}
+                checked
+            {% endif %}
+            disabled>
     </div>
     {% endfor %}
-  </div>
 </div>
+
 {% endblock %}

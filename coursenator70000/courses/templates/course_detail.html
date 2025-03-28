@@ -3,14 +3,16 @@
 {% block content %}
 <div class="course-detail">
     <h2 class="course-title">{{ course.title }}</h2>
-    <p>{{ course.description }}</p>
+    <p class="course-detail__desc">{{ course.description }}</p>
 </div>
 <div class="modules-collection">
     {% for module in modules %}
         <div class="module-container">
             <h3 class="module-container__title">{{ module.title }}</h3>
             <p> затычка уроков затычка тестов </p>
-            <a href="{% url 'module_detail' module.id %}" ></a>
+            {% if user.is_authenticated and enrolled %}
+                <a href="{% url 'module_detail' module.id %}" class="module-container__link"></a>
+            {% endif %}
         </div>
     {% endfor %}
 </div>

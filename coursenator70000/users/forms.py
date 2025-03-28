@@ -6,16 +6,15 @@ from .models import User
 
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'password1', 'password2')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
 class LoginForm(AuthenticationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
+    username = forms.CharField(required=True, widget=forms.TextInput(attrs={
         'class': "login-class",
-        'placeholder': 'Введите почту',
+        'placeholder': 'Введите логин',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': "login-class",
@@ -24,4 +23,4 @@ class LoginForm(AuthenticationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ('username', 'password')

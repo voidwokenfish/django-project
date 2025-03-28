@@ -4,8 +4,33 @@
 <h2>Регистрация</h2>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }} <!-- моя форма из view -->
-    <button type="submit">Зарегистрироваться</button>
+    <div>
+        <label class="" for='{{ form.username.id_for_label }}'>
+            username
+        </label>
+        {{ form.username }}
+        <label class="" for='{{ form.email.id_for_label }}'>
+            email
+        </label>
+        {{ form.email }}
+        <label class="" for='{{ form.first_name.id_for_label }}'>
+            firstname
+        </label>
+        {{ form.first_name }}
+        <label class="" for='{{ form.last_name.id_for_label }}'>
+            lastname
+        </label>
+        {{ form.last_name }}
+        <label class="" for='{{ form.password1.id_for_label }}'>
+            password
+        </label>
+        {{ form.password1 }}
+        <label class="" for='{{ form.password2.id_for_label }}'>
+            password again
+        </label>
+        {{ form.password2 }}
+    </div>
+    <button type="submit">Зарегистрироваться!</button>
 </form>
 
 {% endblock %}

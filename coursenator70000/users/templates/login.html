@@ -5,10 +5,10 @@
 <form method="post">
     {% csrf_token %}
     <div>
-        <label class="" for='{{ form.email.id_for_label }}'>
-            email
+        <label class="" for='{{ form.username.id_for_label }}'>
+            username
         </label>
-        {{ form.email }}
+        {{ form.username }}
         <label class="" for='{{ form.password.id_for_label }}'>
             password
         </label>
