@@ -15,7 +15,6 @@ def quiz_detail(request, pk):
             form = QuizForm(request.POST, question=question)
             forms.append(form)
         if all(form.is_valid() for form in forms):
-
             return render(request, 'quiz_result.html')
 
     else:

@@ -44,7 +44,7 @@ class Lesson(models.Model):
     course_order = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.title
+        return f"{self.title}, Порядок: {self.course_order}"
 
     class Meta:
         verbose_name = "Урок"

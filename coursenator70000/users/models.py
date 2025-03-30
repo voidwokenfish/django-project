@@ -3,10 +3,10 @@ from django.db import models
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=50, unique=True)
-    email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=50, blank=True)
-    last_name = models.CharField(max_length=50, blank=True)
+    username = models.CharField(max_length=50, unique=True, verbose_name="Никнейм")
+    email = models.EmailField(unique=True, verbose_name="Эл. Почта")
+    first_name = models.CharField(max_length=50, blank=True, verbose_name="Имя")
+    last_name = models.CharField(max_length=50, blank=True, verbose_name="Фамилия")
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
@@ -14,9 +14,10 @@ class User(AbstractUser):
         return self.username
 
     class Meta:
-        verbose_name = 'Студент'
-        verbose_name_plural = 'Студенты'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
+# todo Перенос в курсы
 class UserLessonCompleted(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     lesson = models.ForeignKey('courses.Lesson', on_delete=models.CASCADE)
@@ -29,6 +30,7 @@ class UserLessonCompleted(models.Model):
         verbose_name = "Завершенный урок"
         verbose_name_plural = "Завершенные уроки"
 
+# todo Перенос в квизы
 class UserQuizAttempt(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey('quizzes.Quiz', on_delete=models.CASCADE)
