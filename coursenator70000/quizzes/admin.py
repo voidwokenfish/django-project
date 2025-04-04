@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Quiz, QuizQuestion, QuizAnswer
+from .models import Quiz, QuizQuestion, QuizAnswer, QuizAttempt
 
 
 @admin.action(description="Декомплитрекваенатор")
@@ -45,5 +45,9 @@ class QuizQuestionAdmin(admin.ModelAdmin):
 
 @admin.register(QuizAnswer)
 class QuizAnswerAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(QuizAttempt)
+class QuizAttemptAdmin(admin.ModelAdmin):
     pass
 

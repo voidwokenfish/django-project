@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Module, Lesson, Enrollment, Topic
+from .models import Course, Module, Lesson, Enrollment, Topic, UserLessonCompleted
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
@@ -19,4 +19,8 @@ class EnrollmentAdmin(admin.ModelAdmin):
 
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(UserLessonCompleted)
+class UserLessonCompletedAdmin(admin.ModelAdmin):
     pass

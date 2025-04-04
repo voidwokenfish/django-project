@@ -5,20 +5,25 @@
   <h2 class="module-detail__title">{{ module.title }}</h2>
   <p class="module-detail__desc">Уроки-квизы-уроки-квизы</p>
 </div>
-<div class="lesson-collection">
+<div class="content-collection">
     {% for item in content_items %}
     <div class="content-container">
+        <h2>
+            {% if item.type == 'lesson' %}
+            Урок. {{ item.obj.title }}
+            {% else %}
+            Квиз. {{ item.obj.title }}
+            {% endif %}
+        </h2>
         <a href="
             {% if item.type == 'lesson' %}
                 {% url 'lesson_detail' item.obj.id %}
             {% else %}
-                {% url 'quiz_detail' item.obj.id %}
+                {% url 'quiz_detail' item.obj.id %}?module_id={{ module.id }}
             {% endif %}"
             class="content-container__link">
-            {{ item.obj.title }}
         </a>
-
-        <input type="checkbox"
+        <input type="checkbox" class="content-container__checkbox"
             {% if item.type == 'lesson' and item.obj.id in completed_lessons %}
                 checked
             {% elif item.type == 'quiz' and item.obj.id in completed_quizzes %}

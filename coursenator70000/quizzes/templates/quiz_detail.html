@@ -1,28 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Квиз {{quiz.number }}{% endblock %}
+{% block title %}Квиз "{{quiz.title }}"{% endblock %}
 {% block content %}
-<div class="quiz_detail">
-    <div class="quiz_detail__header">
+<form hx-post="{% url 'get-questions' %}/start">
+    {% csrf_token %}
+    <div class="quiz_detail">
         <h2 class="quiz_detail__title">{{ quiz.title }}</h2>
-        <button type="submit">Начать</button>
-    </div>
-
-    <form method="post">
-        {% csrf_token %}
-        <div class="quiz">
-            {% for form in forms %}
-                <label class="quiz__question" for='{{ form.question.id_for_label }}'>
-                    {{ form.question }}
-                </label>
-
-                {% for answer in form.answer %}
-                    <label class="quiz__answer" for='{{ form.answer.id_for_label }}'>
-                        {{ form.answer }}
-                    </label>
-                {% endfor %}
-            {% endfor %}
+        <div class="quiz_detail__header">
+            <p>Необходимый балл: {{ quiz.pass_score }}</p>
+            <p>Вопросы: {{ quiz.questions_count }}</p>
+            <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+            <input type="hidden" name="module_id" value="{{ module.id }}">
+            <button class="btn" type="submit">Начать</button>
         </div>
-        <button type="submit">Завершить квиз</button>
-    </form>
-</div>
+    </div>
+</form>
 {% endblock %}

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>{% block title %}{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
 <header class="navbar">
@@ -18,7 +19,7 @@
             <p>Привет, {{ user.username }}!</p>
             <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Выйти</button>
+                <button class="btn" type="submit">Выйти</button>
             </form>
         {% else %}
             <a href="{% url 'login' %}">Войти</a>

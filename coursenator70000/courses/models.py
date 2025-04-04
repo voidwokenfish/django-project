@@ -78,3 +78,16 @@ class Enrollment(models.Model):
     class Meta:
         verbose_name = "Зачисление"
         verbose_name_plural = "Зачисления"
+
+
+class UserLessonCompleted(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    lesson = models.ForeignKey('courses.Lesson', on_delete=models.CASCADE)
+    completed_datetime = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student}, {self.lesson}, {self.completed_datetime}"
+
+    class Meta:
+        verbose_name = "Завершенный урок"
+        verbose_name_plural = "Завершенные уроки"

@@ -17,7 +17,6 @@ class User(AbstractUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
-# todo Перенос в курсы
 class UserLessonCompleted(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     lesson = models.ForeignKey('courses.Lesson', on_delete=models.CASCADE)
@@ -30,7 +29,6 @@ class UserLessonCompleted(models.Model):
         verbose_name = "Завершенный урок"
         verbose_name_plural = "Завершенные уроки"
 
-# todo Перенос в квизы
 class UserQuizAttempt(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey('quizzes.Quiz', on_delete=models.CASCADE)
