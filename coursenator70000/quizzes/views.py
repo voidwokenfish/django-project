@@ -21,7 +21,6 @@ def quiz_detail(request, pk):
 def get_questions(request, is_start=False):
 
     module_id = request.session.get('module_id')
-    print(module_id)
 
     if is_start:
         request = _reset_quiz(request)

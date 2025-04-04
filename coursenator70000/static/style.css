@@ -424,6 +424,10 @@
     background-color: #0056b3;
     }
 
+a {
+    text-decoration: none;
+}
+
 .quiz-container {
 
 }

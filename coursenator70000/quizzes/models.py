@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from courses.models import Module
 
 
 User = get_user_model()
 
 
 class Quiz(models.Model):
-    module = models.ForeignKey('courses.Module', on_delete=models.CASCADE, default=1)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=300)
     number = models.IntegerField()
     course_order = models.IntegerField(default=0)
@@ -45,8 +46,8 @@ class QuizAnswer(models.Model):
 
 class QuizAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quiz = models.ForeignKey('quizzes.Quiz', on_delete=models.CASCADE)
-    date = models.DateField()
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
     score = models.IntegerField()
 
     def __str__(self):
