@@ -5,13 +5,15 @@ from django.utils import timezone
 from django import http
 from django.shortcuts import render, redirect
 from django.template.context_processors import request
+from django.contrib.auth import get_user_model
 
-from .models import Course, Module, Lesson, Enrollment
+from .models import Course, Module, Lesson, Enrollment, UserLessonCompleted
 from django.views.generic import UpdateView
 from django.urls import reverse
 
-from users.models import UserLessonCompleted, UserQuizAttempt
-from quizzes.models import Quiz
+from quizzes.models import Quiz, QuizAttempt
+
+User = get_user_model()
 
 
 def index(request):
@@ -32,7 +34,7 @@ def module_detail(request, pk):
     module = Module.objects.get(pk=pk)
 
     lessons = list(module.lesson_set.all())
-    quizzes = list(Quiz.objects.filter(course=module.course))
+    quizzes = list(Quiz.objects.filter(module=module))
 
     # Объединяем уроки и тесты, сортируя по course_order
     content_items = sorted(
@@ -42,10 +44,10 @@ def module_detail(request, pk):
     )
 
     completed_lessons = UserLessonCompleted.objects.filter(
-        student=request.user, lesson__in=lessons
+        user=request.user, lesson__in=lessons
     ).values_list("lesson_id", flat=True)
 
-    max_scores = UserQuizAttempt.objects.filter(student=request.user).values('quiz').annotate(
+    max_scores = QuizAttempt.objects.filter(user=request.user).values('quiz').annotate(
         max_score=Max('score'))
     user_scores = {item['quiz']: item['max_score'] for item in max_scores}
     completed_quizzes = {quiz.id for quiz in quizzes if user_scores.get(quiz.id, 0) >= quiz.pass_score}
@@ -97,3 +99,14 @@ def enroll_student(request, pk):
         return redirect('course_detail', pk=pk)
     else:
         return redirect('login')
+
+def complete_lesson(request, pk):
+    if request.user.is_authenticated:
+        lesson = Lesson.objects.get(pk=pk)
+        UserLessonCompleted.objects.create(
+            user=request.user, lesson=lesson, completed_datetime=timezone.now().date()
+        )
+        module_id = lesson.module.id
+        return redirect('module_detail', pk=module_id)
+    else:
+        return redirect('index')

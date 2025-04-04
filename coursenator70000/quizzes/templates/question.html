@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div class="quiz-container">
+  <form id="question-form" hx-post="{% url 'get-answer' %}">
+    {% csrf_token %}
+
+    <h2 id="heading-text">{{ question.text }}</h2>
+
+    <ol style="list-style-type: none;">
+      {% for answer in answers %}
+      <li class="option">
+        <input
+          type="radio"
+          id="answer-{{ forloop.counter0 }}"
+          value="{{ answer.id }}"
+          name="answer_id"
+          required
+        />
+        <label for="answer-{{ forloop.counter0 }}">{{ answer.text }}</label>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <button class="btn" type="submit">Далее</button>
+  </form>
+</div>
+
+<script>
+  window.onbeforeunload = function () {
+    return 'Хотите выйти? Прогресс будет утерян.'
+  }
+</script>
+
+{% endblock %}

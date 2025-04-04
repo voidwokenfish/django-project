@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div>
+  <p>Квиз завершен. Ты набрал {{ percent_score }}%</p>
+  <p>{{ score }} / {{ questions_count }} правильных ответов.</p>
+
+  <a class="btn" href="{% url 'module_detail' pk=module_id %}"> Завершить тест </a>
+</div>
+
+{% endblock %}

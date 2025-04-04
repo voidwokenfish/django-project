@@ -1,8 +1,31 @@
 {% extends "base.html" %}
 {% block title %}{{ lesson.title }}{% endblock %}
 {% block content %}
-<div>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/xvFZjo5PgG0?si=1OUEbaILKzey9_3y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  <p>{{ lesson.lesson_details }}</p>
+<div class="lesson-detail">
+  <div class="lesson-detail__header">
+    <h2>
+      {{ lesson.title }}
+    </h2>
+  </div>
+  <div class="lesson-detail__body">
+    <iframe
+      src="https://www.youtube.com/embed/xvFZjo5PgG0?si=1OUEbaILKzey9_3y"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+    <p>{{ lesson.lesson_details }}</p>
+  </div>
+  <div class="lesson-detail__footer">
+    {% if user.is_authenticated %}
+      <form action="{% url 'complete_lesson' pk=lesson.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Завершить урок</button>
+      </form>
+    {% endif %}
+  </div>
 </div>
+
 {% endblock %}

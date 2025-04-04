@@ -6,8 +6,8 @@ User = get_user_model()
 
 
 class Quiz(models.Model):
-    course = models.ForeignKey('courses.Course', on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    module = models.ForeignKey('courses.Module', on_delete=models.CASCADE, default=1)
+    title = models.CharField(max_length=300)
     number = models.IntegerField()
     course_order = models.IntegerField(default=0)
     pass_score = models.IntegerField()
@@ -22,10 +22,10 @@ class Quiz(models.Model):
 
 class QuizQuestion(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-    question = models.TextField()
+    text = models.CharField(max_length=300)
 
     def __str__(self):
-        return self.question
+        return self.text
 
     class Meta:
         verbose_name = "Вопрос квиза"
@@ -33,12 +33,25 @@ class QuizQuestion(models.Model):
 
 class QuizAnswer(models.Model):
     question = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE)
-    answer = models.TextField()
+    text = models.CharField(max_length=300)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.answer
+        return self.text
 
     class Meta:
         verbose_name = "Ответ квиза"
         verbose_name_plural = "Ответы квиза"
+
+class QuizAttempt(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quiz = models.ForeignKey('quizzes.Quiz', on_delete=models.CASCADE)
+    date = models.DateField()
+    score = models.IntegerField()
+
+    def __str__(self):
+        return f"Student: {self.user}, Quiz: {self.quiz}, Date: {self.date}, Score: {self.score}"
+
+    class Meta:
+        verbose_name = "Попытка выполнить квиз"
+        verbose_name_plural = "Попытки выполнить квизы"
