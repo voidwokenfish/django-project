@@ -115,5 +115,3 @@ def _set_attempt_score(request, percent):
 
     last_attempt.save()
     return last_attempt
-
-
