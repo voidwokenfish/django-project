@@ -3,11 +3,17 @@
 {% block content %}
 <div class="module-detail">
   <h2 class="module-detail__title">{{ module.title }}</h2>
-  <p class="module-detail__desc">Уроки-квизы-уроки-квизы</p>
+    <p class="module-detail__desc">
+        Завершено {{ completed_lessons|length }}/{{ content_items|length }} уроков и квизов
+    </p>
+    <div class="module-detail__progress-container">
+        <progress value="{{ progressbar }}" max="100"></progress>
+        <span class="progress-text">{{ progressbar }}%</span>
+    </div>
 </div>
 <div class="content-collection">
     {% for item in content_items %}
-    <div class="content-container">
+    <div class="content-container {% if not item.is_unlocked %}content-container--disabled{% endif %}">
         <h2>
             {% if item.type == 'lesson' %}
             Урок. {{ item.obj.title }}
@@ -21,7 +27,7 @@
             {% else %}
                 {% url 'quiz_detail' item.obj.id %}?module_id={{ module.id }}
             {% endif %}"
-            class="content-container__link">
+            class="content-container__link {% if not item.is_unlocked %}content-container__link--disabled{% endif %}">
         </a>
         <input type="checkbox" class="content-container__checkbox"
             {% if item.type == 'lesson' and item.obj.id in completed_lessons %}

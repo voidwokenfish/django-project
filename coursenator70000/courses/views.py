@@ -27,11 +27,15 @@ def course_detail(request, pk):
         enrolled = Enrollment.objects.filter(course=course, user=request.user).exists()
     else:
         enrolled = False
-    return render(request, 'course_detail.html', context={"course": course, "modules": modules, "enrolled": enrolled})
+
+    return render(request, 'course_detail.html', context={
+        "course": course, "modules": modules, "enrolled": enrolled
+    })
 
 
 def module_detail(request, pk):
     module = Module.objects.get(pk=pk)
+    course = module.course
 
     lessons = list(module.lesson_set.all())
     quizzes = list(Quiz.objects.filter(module=module))
@@ -52,12 +56,46 @@ def module_detail(request, pk):
     user_scores = {item['quiz']: item['max_score'] for item in max_scores}
     completed_quizzes = {quiz.id for quiz in quizzes if user_scores.get(quiz.id, 0) >= quiz.pass_score}
 
+    progressbar = round((len(completed_lessons) + len(completed_quizzes)) / len(content_items) * 100)
+
+    unlocked = True  # первый элемент всегда доступен
+    for item in content_items:
+        if not course.is_linear:
+            item["is_unlocked"] = True
+            continue
+
+        if unlocked:
+            item["is_unlocked"] = True
+        else:
+            item["is_unlocked"] = False
+
+        # Проверяем, завершен ли текущий элемент
+        if item["type"] == "lesson" and item["obj"].id in completed_lessons:
+            unlocked = True
+        elif item["type"] == "quiz" and item["obj"].id in completed_quizzes:
+            unlocked = True
+        else:
+            unlocked = False  # блокируем следующий, если текущий не завершен
+
+
+
+    print(f" Прогресс = {progressbar}")
+
     return render(request, 'module_detail.html', {
         "module": module,
         "content_items": content_items,
         "completed_lessons": completed_lessons,
         "completed_quizzes": completed_quizzes,
+        "progressbar": progressbar,
     })
+
+def can_access_content(user, module, lessons, quizzes, items):
+    """Проверяем открыт ли текущий урок или квиз для студента в линейном курсе.
+    Если курс не линейный - доступ открыт по умолчанию.
+    """
+    if not module.course.is_linear:
+        return True
+
 
 
 def lesson_detail(request, pk):
@@ -110,3 +148,6 @@ def complete_lesson(request, pk):
         return redirect('module_detail', pk=module_id)
     else:
         return redirect('index')
+
+
+

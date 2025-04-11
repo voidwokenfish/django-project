@@ -86,7 +86,7 @@ class UserLessonCompleted(models.Model):
     completed_datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.student}, {self.lesson}, {self.completed_datetime}"
+        return f"{self.user}, {self.lesson}, {self.completed_datetime}"
 
     class Meta:
         verbose_name = "Завершенный урок"
