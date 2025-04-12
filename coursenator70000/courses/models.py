@@ -6,6 +6,18 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class Topic(models.Model): #тема для курсов чтобы пользователь мог найти по темам
+    title = models.CharField(max_length=200)
+    is_active = models.BooleanField() # Досупен ли курс, мб на переработке
+
+    #Добавить класс m2m чтобы привязать к курсам
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
 
 class Course(models.Model):
     title = models.CharField(max_length=200)
@@ -13,6 +25,7 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='courses_images/', null=True, blank=True, default='default.jpg')
     is_linear = models.BooleanField() # Нужно ли студенту на данном курсе завершать урок, чтобы перейти к следующему
+    topics = models.ManyToManyField(Topic, blank=True)
 
     def __str__(self):
         return self.title
@@ -49,23 +62,6 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
-
-
-class Topic(models.Model): #тема для курсов чтобы пользователь мог найти по темам
-    title = models.TextField()
-    description = models.TextField()
-    image = models.ImageField(upload_to="topics")
-    is_active = models.BooleanField() # Досупен ли курс, мб на переработке
-
-    #Добавить класс m2m чтобы привязать к курсам
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Тег"
-        verbose_name_plural = "Теги"
-
 
 class Enrollment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)

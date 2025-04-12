@@ -5,6 +5,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', index, name='index'),
+    path('page/<int:page_number>', index, name='paginator'),
+    path('topic/<int:topic_id>', index, name='topic'),
     path('course/<int:pk>', course_detail, name='course_detail'),
     path('course/<int:pk>/update', CourseUpdateView.as_view(), name='course_update'),
     path('course/module/<int:pk>', module_detail, name='module_detail'),

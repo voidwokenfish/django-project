@@ -6,8 +6,9 @@ from django import http
 from django.shortcuts import render, redirect
 from django.template.context_processors import request
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator
 
-from .models import Course, Module, Lesson, Enrollment, UserLessonCompleted
+from .models import Topic, Course, Module, Lesson, Enrollment, UserLessonCompleted
 from django.views.generic import UpdateView
 from django.urls import reverse
 
@@ -16,13 +17,25 @@ from quizzes.models import Quiz, QuizAttempt
 User = get_user_model()
 
 
-def index(request):
-    courses = Course.objects.all()
-    return render(request, 'index.html', context={"courses": courses})
+def index(request, topic_id=None, page_number=1):
+    topics = Topic.objects.all()
+    if topic_id:
+        courses = Course.objects.filter(topics=topic_id)
+    else:
+        courses = Course.objects.all()
+
+    per_page = 2
+    paginator = Paginator(courses, per_page)
+    courses_paginator = paginator.page(page_number)
+
+    return render(request, 'index.html', context={
+        "courses": courses, "topics": topics, "courses_paginator": courses_paginator
+    })
 
 def course_detail(request, pk):
     course = Course.objects.get(pk=pk)
     modules = course.module_set.all()
+
     if request.user.is_authenticated:
         enrolled = Enrollment.objects.filter(course=course, user=request.user).exists()
     else:
@@ -58,7 +71,7 @@ def module_detail(request, pk):
 
     progressbar = round((len(completed_lessons) + len(completed_quizzes)) / len(content_items) * 100)
 
-    unlocked = True  # первый элемент всегда доступен
+    unlocked = True  # первый элемент всегда доступенн
     for item in content_items:
         if not course.is_linear:
             item["is_unlocked"] = True
@@ -69,7 +82,7 @@ def module_detail(request, pk):
         else:
             item["is_unlocked"] = False
 
-        # Проверяем, завершен ли текущий элемент
+        # Прверяем, завершен ли текущий элемент
         if item["type"] == "lesson" and item["obj"].id in completed_lessons:
             unlocked = True
         elif item["type"] == "quiz" and item["obj"].id in completed_quizzes:
@@ -99,6 +112,7 @@ def can_access_content(user, module, lessons, quizzes, items):
 
 
 def lesson_detail(request, pk):
+    #Проверочку на прохождение урока
     lesson = Lesson.objects.get(pk=pk)
     return render(request, 'lesson_detail.html', context={"lesson": lesson})
 

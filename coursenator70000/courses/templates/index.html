@@ -5,15 +5,20 @@
 <h1 class="catalog-title">
     Каталог курсов
 </h1>
+<div>
+    {% for topic in topics %}
+        <a href="{% url 'topic' topic.id %}">{{ topic.title }}</a>
+    {% endfor %}
+</div>
 <div class="courses-collection">
-    {% for course in courses %}
+    {% for course in courses_paginator %}
         <div class="course-card">
             <header class="course-card__header">
                 <div class="course-card__tag">
 
                 </div>
                 <h2 class="course-card__title">
-                    {{ course.title }}
+                    {{ cours.title }}
                 </h2>
                 <p class="course-card__description">
                     {{ course.description }}
@@ -31,4 +36,28 @@
         </div>
     {% endfor %}
 </div>
+<nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {% if not courses_paginator.has_previous %} disabled {% endif %}">
+                                <a class="page-link"
+                                   href="{% if courses_paginator.has_previous %} {% url 'paginator' courses_paginator.previous_page_number %} {% else %} # {% endif %}"
+                                   tabindex="-1" aria-disabled="true">
+                                   Предыдущая
+                                </a>
+                            </li>
+                            {% for page in courses_paginator.page_range %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{% url 'paginator' page %}"> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                        {{ page }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            <li class="page-item {% if not courses_paginator.has_next %} disabled {% endif %}">
+                                <a class="page-link"
+                                   href="{% if courses_paginator.has_next %} {% url 'paginator' courses_paginator.next_page_number %} {% else %} # {% endif %}">
+                                   Следующая
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
 {% endblock %}
