@@ -11,16 +11,24 @@
 <header class="navbar">
     <h1>Мой сайт</h1>
     <nav>
-        <ul class="navbar__list">
-            <li><a href="/">Главная</a></li>
-            <li><a href="/">О нас</a></li>
-        </ul>
         {% if user.is_authenticated %}
-            <p>Привет, {{ user.username }}!</p>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button class="btn" type="submit">Выйти</button>
-            </form>
+            <div class="dropdown">
+                <div class="dropdown__toggle">
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" alt="Аватар">
+                {% else %}
+                    <img src="{% static 'images/defaultpfp.jpg' %}" alt="Аватар по умолчанию">
+                {% endif %}
+
+                </div>
+                <div class="dropdown__menu">
+                    <a href="{% url 'profile' user.username %}">Профиль</a>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="dropdown__button" type="submit">Выйти</button>
+                    </form>
+                </div>
+            </div>
         {% else %}
             <a href="{% url 'login' %}">Войти</a>
             <a href="{% url 'register' %}">Регистрация</a>

@@ -23,7 +23,7 @@ class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='courses_images/', null=True, blank=True, default='default.jpg')
+    image = models.ImageField(upload_to='courses_images/', null=True, blank=True, default='defaultpfp.jpg')
     is_linear = models.BooleanField() # Нужно ли студенту на данном курсе завершать урок, чтобы перейти к следующему
     topics = models.ManyToManyField(Topic, blank=True)
 

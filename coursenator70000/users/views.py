@@ -1,19 +1,26 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import redirect
 
 from .forms import RegisterForm, LoginForm
 
+from .models import Profile
+from courses.models import Course, Enrollment
 from django.contrib import auth
 from django.urls import reverse
 
+User = get_user_model()
 
-# Create your views here.
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            profile = Profile.objects.create(user=user)
             return redirect('login')
+        else:
+            print(form.errors)
 
     else:
         form = RegisterForm() #При GET запросе
@@ -35,3 +42,20 @@ def user_login(request):
         form = LoginForm()
 
     return render(request, 'login.html', {'form': form})
+
+
+@login_required
+def profile(request, username):
+    if request.user.username != username:
+        return redirect('index')
+
+    user = User.objects.get(username=username)
+    profile = user.profile
+    courses = []
+    enrollments = Enrollment.objects.filter(user=user)
+
+    for enrollment in enrollments:
+        courses.append(enrollment.course)
+    return render(request, 'profile.html', {
+        "profile": profile, "user": user, "courses": courses, "enrollments": enrollments
+    })

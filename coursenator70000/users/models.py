@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.templatetags.static import static
 
 
 class User(AbstractUser):
@@ -17,3 +18,19 @@ class User(AbstractUser):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+
+    @property
+    def avatar_url(self):
+        if self.avatar:
+            return self.avatar.url
+        return static('images/defaultpfp.jpg')
+
+    def __str__(self):
+        return f"Профиль {self.user.username}"
+
+    class Meta:
+        verbose_name = "Профиль"
+        verbose_name_plural = "Профили"

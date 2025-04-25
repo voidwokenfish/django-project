@@ -41,12 +41,74 @@
     color: blue;
 }
 
+.dropdown {
+      position: relative;
+      display: inline-block;
+}
+
+.dropdown img {
+    max-width: 45px;
+    max-height: 45px;
+}
+
+.dropdown__toggle {
+    cursor: pointer;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: left;
+}
+
+.dropdown__button {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: left;
+}
+
+.dropdown__button:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown__menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.dropdown__menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown__menu a:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown:hover .dropdown__menu {
+    display: block;
+}
+
 .base-footer {
     position: absolute;
     bottom: 10px;
     right: 10px;
 }
-
 
 .catalog-title {
     padding-left: 12px;
@@ -57,6 +119,22 @@
     width: 100%;
     margin: 0 auto;
     margin-top: 60px;
+}
+
+.topic-list {
+    max-width: 1426px;
+    display: flex;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 24px;
+    text-decoration: none;
+    gap: 10px;
+}
+
+.topic-list__container {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 10px;
 }
 
 .courses-collection {
@@ -157,6 +235,18 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px
+}
+
+.pagination-justify-content-center {
+    list-style-type: none;
+    max-width: 1426px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 24px;
+    text-decoration: none;
+    gap: 10px;
 }
 
 .modules-collection {
@@ -280,7 +370,6 @@
     box-sizing: border-box;
 }
 
-
 .content-container:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -385,8 +474,6 @@
     align-self: flex-end;
 }
 
-
-
 #topic-container {
         background-color: #fff;
         padding: 20px;
@@ -457,6 +544,15 @@
 
 a {
     text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+a:active {
+    color: black;
 }
 
 .quiz-container {

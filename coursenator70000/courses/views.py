@@ -18,6 +18,8 @@ User = get_user_model()
 
 
 def index(request, topic_id=None, page_number=1):
+    topic_id = request.GET.get('topic')
+    page_number = request.GET.get('page', 1)
     topics = Topic.objects.all()
     if topic_id:
         courses = Course.objects.filter(topics=topic_id)
@@ -29,7 +31,7 @@ def index(request, topic_id=None, page_number=1):
     courses_paginator = paginator.page(page_number)
 
     return render(request, 'index.html', context={
-        "courses": courses, "topics": topics, "courses_paginator": courses_paginator
+        "courses": courses, "topics": topics, "courses_paginator": courses_paginator, "current_topic": topic_id
     })
 
 def course_detail(request, pk):
