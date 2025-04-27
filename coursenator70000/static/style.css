@@ -590,3 +590,7 @@ progress::-webkit-progress-value {
     z-index: 2;
     pointer-events: none;
 }
+
+.body {
+    font-family: "Times New Roman";
+}

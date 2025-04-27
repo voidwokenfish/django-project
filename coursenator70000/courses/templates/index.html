@@ -2,9 +2,12 @@
 {% load static %}
 {% block title %}Главная страница{% endblock %}
 {% block content %}
-<h1 class="catalog-title">
-    Каталог курсов
-</h1>
+<div>
+    <h1 class="catalog-title">
+        Каталог курсов
+    </h1>
+</div>
+
 <div class="topic-list">
     {% for topic in topics %}
         <div class="topic-list__container">

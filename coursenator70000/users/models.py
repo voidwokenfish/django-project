@@ -1,3 +1,4 @@
+from Tools.i18n.pygettext import default_keywords
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.templatetags.static import static
@@ -8,6 +9,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name="Эл. Почта")
     first_name = models.CharField(max_length=50, blank=True, verbose_name="Имя")
     last_name = models.CharField(max_length=50, blank=True, verbose_name="Фамилия")
+    is_active = models.BooleanField(default=False, verbose_name="Активен")
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 

@@ -10,6 +10,9 @@ from courses.models import Course, Enrollment
 from django.contrib import auth
 from django.urls import reverse
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 User = get_user_model()
 
 def register(request):
@@ -18,6 +21,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             profile = Profile.objects.create(user=user)
+            send_mail("Успешная регистрация!", "Вы молодец!", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
             return redirect('login')
         else:
             print(form.errors)
