@@ -17,7 +17,7 @@
     border-radius: 6px;
     box-sizing: border-box; /*padding не увеличивают размеры */
     z-index: 1000;
-    margin: 0 auto; /* чтобы было в центре */
+    margin: 0 auto;
 }
 
 .navbar__list {
@@ -118,7 +118,6 @@
     max-width: 1426px;
     width: 100%;
     margin: 0 auto;
-    margin-top: 60px;
 }
 
 .topic-list {
@@ -591,6 +590,79 @@ progress::-webkit-progress-value {
     pointer-events: none;
 }
 
-.body {
+body {
     font-family: "Times New Roman";
+    padding-top: 60px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 1426px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #ddd;
+    position: relative;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4cafa7;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.profile__user {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile__user p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile__enrollments h2 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.profile__enrollments ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile__enrollments li {
+    position: relative;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-left: 5px solid #4cafa7;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.profile__enrollments li a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.profile__enrollments li:hover {
+    background-color: #e0f7e9;
+    cursor: pointer;
 }

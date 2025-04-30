@@ -2,19 +2,30 @@
 {% block title %}Профиль{% endblock %}
 {% load static %}
 {% block content %}
-<div>
-    {% if profile.avatar %}
-        <img src="{{ profile.avatar.url }}" alt="Аватар">
-    {% else %}
-        <img src="{% static 'images/defaultpfp.jpg' %}" alt="Аватар по умолчанию">
-    {% endif %}
-    <p>{{ user.username }}</p>
+<div class="profile">
+    <div class="profile__user">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="Аватар" onclick="document.getElementById('id_avatar').click();" style="cursor:pointer;">
+            {% else %}
+                <img src="{% static 'images/defaultpfp.jpg' %}" alt="Аватар по умолчанию" onclick="document.getElementById('id_avatar').click();" style="cursor:pointer;">
+            {% endif %}
+            {{ form.avatar }}
+        </form>
+        <p>{{ user.username }}</p>
+    </div>
+    <div class="profile__enrollments">
+        <h2>Твои курсы</h2>
+        <ul>
+            {% for course in courses %}
+                <li>
+                    {{ course.title }}
+                    <a href="{% url 'course_detail' course.id %}"></a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
-<div>
-    {% for course in courses %}
-        <p>
-           {{ course.title }}
-        </p>
-    {% endfor %}
-</div>
+
 {% endblock %}

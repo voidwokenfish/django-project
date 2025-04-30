@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.shortcuts import redirect
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ProfileAvatarForm
 
 from .models import Profile
 from courses.models import Course, Enrollment
@@ -60,6 +60,19 @@ def profile(request, username):
 
     for enrollment in enrollments:
         courses.append(enrollment.course)
+
+    if request.method == 'POST':
+        form = ProfileAvatarForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile.save()
+            return redirect('profile', username=user.username)
+    else:
+        form = ProfileAvatarForm(instance=request.user.profile)
+
     return render(request, 'profile.html', {
-        "profile": profile, "user": user, "courses": courses, "enrollments": enrollments
+        "profile": profile,
+        "user": user,
+        "courses": courses,
+        "enrollments": enrollments,
+        "form": form
     })

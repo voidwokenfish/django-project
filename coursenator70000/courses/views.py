@@ -26,7 +26,7 @@ def index(request, topic_id=None, page_number=1):
     else:
         courses = Course.objects.all()
 
-    per_page = 2
+    per_page = 12
     paginator = Paginator(courses, per_page)
     courses_paginator = paginator.page(page_number)
 

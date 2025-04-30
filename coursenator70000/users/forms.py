@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .models import User
+from .models import User, Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -24,3 +24,13 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+class ProfileAvatarForm(forms.ModelForm):
+    avatar = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={
+    'accept': 'image/jpg, image/jpeg, image/png',
+    'style': 'display: none;',
+    'onchange': 'this.form.submit();'
+    }))
+    class Meta:
+        model = Profile
+        fields = ['avatar']
