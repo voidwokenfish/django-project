@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<div id="subscribe-modal-overlay"></div>
+<div id="subscribe-modal">
+    <button class="close-btn" onclick="hideModal()">×</button>
+    <h2>Подпишитесь на нашу рассылку, чтобы быть в&nbsp;курсе о новых события Кошачьих Курсов!</h2>
+    <form method="post" action="{% url 'subscribe_email' %}">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Введите ваш email" required>
+        <button type="submit">Подписаться</button>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('subscribe-modal');
+        const overlay = document.getElementById('subscribe-modal-overlay');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // Проверяем localStorage: показывать модалку или нет
+        if (!localStorage.getItem("subscription_shown")) {
+            setTimeout(() => {
+                modal.style.display = 'block';
+                overlay.style.display = 'block';
+                localStorage.setItem("subscription_shown", "true"); // Чтобы не показывать модалку снова
+            }, 60000); // Показать через 60 секунд
+        }
+
+        // Закрытие модального окна
+        closeBtn.onclick = function () {
+            hideModal();
+        };
+
+        // Закрытие модального окна при клике на затемненный фон
+        window.onclick = function (event) {
+            if (event.target === overlay) {
+                hideModal();
+            }
+        };
+
+        // Функция скрытия модалки
+        function hideModal() {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

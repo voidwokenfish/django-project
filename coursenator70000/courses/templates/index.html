@@ -10,11 +10,16 @@
 
 <div class="topic-list">
     {% for topic in topics %}
-        <div class="topic-list__container">
-            <a href="?topic={{ topic.id }}">{{ topic.title }}</a>
+        <div class="topic-list__container {% if current_topic == topic.id|stringformat:'s' %}active{% endif %}">
+            {% if current_topic == topic.id|stringformat:"s" %}
+                <a href="?">{{ topic.title }}</a>
+            {% else %}
+                <a href="?topic={{ topic.id }}">{{ topic.title }}</a>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
+
 <div class="courses-collection">
     {% for course in courses_paginator %}
         <div class="course-card">
@@ -41,7 +46,7 @@
         </div>
     {% endfor %}
 </div>
-<nav aria-label="Page navigation example">
+<nav>
     <ul class="pagination-justify-content-center">
 
         {% if courses_paginator.has_previous %}
