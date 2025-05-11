@@ -1,3 +1,19 @@
+body {
+    font-family: "Times New Roman";
+    padding-top: 60px;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    min-height: 100vh;
+}
 
 .navbar {
     position: fixed;
@@ -588,11 +604,6 @@ progress::-webkit-progress-value {
     font-weight: bold;
     z-index: 2;
     pointer-events: none;
-}
-
-body {
-    font-family: "Times New Roman";
-    padding-top: 60px;
 }
 
 .profile {

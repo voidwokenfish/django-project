@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'courses',
     'users',
     'quizzes',
-    'mailing'
+    'mailing',
+    'news'
 ]
 
 AUTH_USER_MODEL = 'users.User'
