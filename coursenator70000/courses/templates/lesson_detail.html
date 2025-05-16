@@ -19,11 +19,15 @@
     <p>{{ lesson.lesson_details }}</p>
   </div>
   <div class="lesson-detail__footer">
-    {% if user.is_authenticated %}
+    {% if not complition %}
       <form action="{% url 'complete_lesson' pk=lesson.id %}" method="post">
         {% csrf_token %}
-        <button type="submit">Завершить урок</button>
+        <button class="btn" type="submit">Завершить урок</button>
       </form>
+    {% else %}
+      <a href="{% url 'module_detail' pk=module.id %}">
+        <button class="btn" type="button">Вернуться в модуль</button>
+      </a>
     {% endif %}
   </div>
 </div>

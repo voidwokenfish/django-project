@@ -6,10 +6,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
     path('register/', register, name='register'),
     path('login/', user_login, name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('/', LogoutView.as_view(next_page='/'), name='logout'),
     path('profile/<str:username>/', profile, name='profile'),
 ]
 

@@ -17,16 +17,22 @@
     {% endfor %}
 </div>
 <div>
-    {% if user.is_authenticated %}
-        <form action="{% url 'enroll_student' pk=course.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Начать учиться</button>
-        </form>
+    {% if not enrolled %}
+        {% if user.is_authenticated %}
+            <form action="{% url 'enroll_student' pk=course.id %}" method="post">
+                {% csrf_token %}
+                <button class="btn" type="submit">Начать учиться</button>
+            </form>
+        {% endif %}
     {% endif %}
 </div>
 <div>
-<!--    {% if user.is_staff %}-->
-<!--    {% endif %}-->
-    <a href="{% url 'course_update' course.id %}">Change</a>
+    {% if user.is_staff %}
+        <a href="{% url 'course_update' course.id %}">
+            <button class="btn">
+                Редактировать
+            </button>
+        </a>
+    {% endif %}
 </div>
 {% endblock %}

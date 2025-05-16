@@ -39,9 +39,9 @@ def course_detail(request, pk):
     modules = course.module_set.all()
 
     if request.user.is_authenticated:
-        enrolled = Enrollment.objects.filter(course=course, user=request.user).exists()
+        enrolled = Enrollment.objects.filter(course=course, user=request.user)
     else:
-        enrolled = False
+        enrolled = None
 
     return render(request, 'course_detail.html', context={
         "course": course, "modules": modules, "enrolled": enrolled
@@ -116,7 +116,13 @@ def can_access_content(user, module, lessons, quizzes, items):
 def lesson_detail(request, pk):
     #Проверочку на прохождение урока
     lesson = Lesson.objects.get(pk=pk)
-    return render(request, 'lesson_detail.html', context={"lesson": lesson})
+    module = Module.objects.get(pk=lesson.module.id)
+    complition = UserLessonCompleted.objects.filter(
+        user=request.user, lesson=lesson)
+
+    return render(request, 'lesson_detail.html', context={
+        "lesson": lesson, "complition": complition, "module": module
+    })
 
 class CourseUpdateView(UpdateView):
     model = Course

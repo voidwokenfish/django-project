@@ -6,7 +6,7 @@ from .forms import RegisterForm, LoginForm, ProfileAvatarForm
 
 from .models import Profile
 from courses.models import Course, Enrollment
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.urls import reverse
 
 from django.core.mail import send_mail
@@ -22,8 +22,6 @@ def register(request):
             profile = Profile.objects.create(user=user)
             send_mail("Успешная регистрация!", "Вы молодец!", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
             return redirect('login')
-        else:
-            print(form.errors)
 
     else:
         form = RegisterForm() #При GET запросе
@@ -34,13 +32,11 @@ def user_login(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
-            print(request.POST)
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+            user = form.get_user()
+            auth.login(request, user)
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            messages.error(request, "Неверное имя пользователя или пароль.")
     else:
         form = LoginForm()
 

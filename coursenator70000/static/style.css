@@ -169,7 +169,7 @@ main {
     flex-direction: column;
     align-items: flex-start;
     gap: 1px;
-    background-color: rgba(0, 0, 255, 0.1);
+    background-color: rgba(113, 85, 47, 0.05);
     border: 1px solid #ddd;
     position: relative;
     padding: 16px;
@@ -239,11 +239,11 @@ main {
     padding: 20px 12px;
     border-radius: 10px;
     background-color: #f9f9f9;
+    box-sizing: border-box;
     align-self: center;
     margin: 0 auto;
     margin-top: 90px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
 }
 
 .course-detail__desc {
@@ -454,10 +454,6 @@ main {
     margin-top: 90px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-}
-
-.lesson-detail__header {
-
 }
 
 .lesson-detail__body {
@@ -926,4 +922,82 @@ input[type="email"] {
     padding: 8px;
     font-size: 16px;
     margin-right: 10px;
+}
+
+.register {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 400px;
+    border-radius: 10px;
+    background-color: rgba(113, 85, 47, 0.1);
+    font-family: sans-serif;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #795548; /* шоколадный */
+    box-shadow: 0 0 3px rgba(121, 85, 72, 0.5);
+}
+
+.btn {
+    background-color: #795548;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #5d4037;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 400px;
+    border-radius: 10px;
+    background-color: rgba(113, 85, 47, 0.1);
+    font-family: sans-serif;
+}
+
+.custom-alert {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #000000;
+    border: 1px solid #f5c6cb;
+    text-align: center;
+
 }
