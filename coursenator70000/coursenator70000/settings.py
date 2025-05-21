@@ -40,11 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_celery_beat',
+
     'courses',
     'users',
     'quizzes',
     'mailing',
-    'news'
+    'news',
+    'periodic_tasks',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -65,7 +69,7 @@ ROOT_URLCONF = 'coursenator70000.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,3 +157,10 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER',cast=str, default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str, default='')
 
 DEFAULT_FROM_EMAIL = ""
+
+
+REDIS_HOST = config('REDIS_HOST', default='localhost')
+REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
+
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/3'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
