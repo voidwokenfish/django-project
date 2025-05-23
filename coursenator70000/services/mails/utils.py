@@ -4,6 +4,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
 from .enums import MailTrigger
+from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from mailing.helpers import account_activation_token
@@ -33,10 +34,10 @@ class MailConstructor:
     def get_data(self) -> dict:
         trigger_map = {
             MailTrigger.GREETING.value: self._greeting_data,
-            MailTrigger.RESET_PASSWORD.value: self._support_response_data,
+            MailTrigger.SUPPORT_RESPONSE.value: self._support_response_data,
             MailTrigger.REGISTER_CONFIRM.value: self._register_confirm_data,
-            MailTrigger.MAIL_CONFIRM.value: self._reset_password_data,
-            MailTrigger.SUPPORT_RESPONSE.value: self._mail_confirm_data,
+            MailTrigger.RESET_PASSWORD.value: self._reset_password_data,
+            MailTrigger.MAIL_CONFIRM.value: self._mail_confirm_data,
             MailTrigger.MAIL_LETTER.value: self._mail_letter_data,
         }
 
@@ -84,10 +85,12 @@ class MailConstructor:
             "subject_template": f"{template_path}/register_confirm_sub.txt",
             "message_template": f"{template_path}/register_confirm_body.html",
         })
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        token = account_activation_token.make_token(self.user)
         self._data["message_context"].update({
-            "uid": urlsafe_base64_encode(force_bytes(self.user.pk)),
-            "token": account_activation_token.make_token(self.user),
-            "endpoint": ...,
+            "uid": uid,
+            "token": token,
+            "endpoint": self.request.build.absolute_uri(reverse('mails:register_confirm', kwargs={"uid":uid, "token":token})),
         })
 
     def _reset_password_data(self):
@@ -97,10 +100,12 @@ class MailConstructor:
             "subject_template": f"{template_path}/reset_password_sub.txt",
             "message_template": f"{template_path}/reset_password_body.html",
         })
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        token = account_activation_token.make_token(self.user)
         self._data["message_context"].update({
-            "uid": urlsafe_base64_encode(force_bytes(self.user.pk)),
-            "token": account_activation_token.make_token(self.user),
-            "endpoint": ..., #todo Сделац эндпоинт который формируется из uid и token, потом дешифрует данные, получая пользователя и для него послдествия(страшные)(смена пароля)
+            "uid": uid,
+            "token": token,
+            "endpoint": self.request.build.absolute_uri(reverse('mails:reset_password', kwargs={"uid":uid, "token":token})),
         })
 
     def _mail_confirm_data(self):
@@ -110,10 +115,13 @@ class MailConstructor:
             "subject_template": f"{template_path}/mail_confirm_sub.txt",
             "message_template": f"{template_path}/mail_confirm_body.html",
         })
+
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        token = account_activation_token.make_token(self.user)
         self._data["message_context"].update({
-            "uid": urlsafe_base64_encode(force_bytes(self.user.pk)),
-            "token": account_activation_token.make_token(self.user),
-            "endpoint": ...,
+            "uid": uid,
+            "token": token,
+            "endpoint": self.request.build.absolute_uri(reverse('mails:mail_confirm', kwargs={"uid":uid, "token":token})),
         })
 
 
