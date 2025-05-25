@@ -26,7 +26,7 @@ class EmailLetter(models.Model):
     body = models.TextField()
     recipient_type = models.CharField(choices=RecipientType.choices, default=None, null=True, blank=True)
     ready_to_send = models.BooleanField(default=False)
-    is_processed = models.BooleanField(default=False)
+    is_processed = models.BooleanField(default=False) #находится в обработке celery
     created_at = models.DateTimeField(auto_now_add=True)
     recipient_list = models.ManyToManyField(to=Subscription, blank=True)
     news = models.OneToOneField(to=News, null=True, blank=True, on_delete=models.SET_NULL)
