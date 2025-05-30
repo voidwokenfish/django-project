@@ -1,11 +1,9 @@
-from django.contrib.auth.views import LogoutView
-from django.urls import path, include
-
-from .views import register, user_login, profile
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
+from django.urls import include, path
 
-
+from .views import profile, register, user_login
 
 urlpatterns = [
     path('register/', register, name='register'),

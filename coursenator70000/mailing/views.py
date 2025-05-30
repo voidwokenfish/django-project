@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
-from django.views.decorators.http import require_POST
-from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.utils.http import urlsafe_base64_decode
+from django.views.decorators.http import require_POST
+
 from .forms import SubscriptionForm
 from .models import Subscription
 
-from django.contrib.auth import get_user_model
-from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
 
 @require_POST
 def subscribe_email(request):

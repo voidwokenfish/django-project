@@ -1,10 +1,9 @@
 from datetime import date, timedelta
 
-from django.shortcuts import render, redirect
 from django.db.models import Count
+from django.shortcuts import redirect, render
 
-from .models import Quiz, QuizQuestion, QuizAnswer, QuizAttempt
-
+from .models import Quiz, QuizAnswer, QuizAttempt, QuizQuestion
 
 
 def quiz_detail(request, pk):

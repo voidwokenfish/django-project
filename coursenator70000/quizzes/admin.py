@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Quiz, QuizQuestion, QuizAnswer, QuizAttempt
+from .models import Quiz, QuizAnswer, QuizAttempt, QuizQuestion
 
 
 @admin.action(description="Декомплитрекваенатор")

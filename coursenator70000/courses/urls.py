@@ -1,7 +1,10 @@
-from django.urls import path
-from .views import index, course_detail, CourseUpdateView, module_detail, lesson_detail, httptest, enroll_student, complete_lesson
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
+
+from .views import (CourseUpdateView, complete_lesson, course_detail,
+                    enroll_student, httptest, index, lesson_detail,
+                    module_detail)
 
 urlpatterns = [
     path('', index, name='index'),

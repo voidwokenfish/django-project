@@ -1,5 +1,7 @@
-from .models import Quiz, QuizAnswer, QuizQuestion
 from django import forms
+
+from .models import Quiz, QuizAnswer, QuizQuestion
+
 
 class QuizForm(forms.Form):
     def __init__(self, *args, **kwargs):

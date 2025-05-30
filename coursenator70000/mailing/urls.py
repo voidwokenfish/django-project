@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import subscribe_email, register_confirm, reset_password, email_confirm
+
+from .views import (email_confirm, register_confirm, reset_password,
+                    subscribe_email)
 
 urlpatterns = [
     path('subscribe/', subscribe_email, name='subscribe_email'),

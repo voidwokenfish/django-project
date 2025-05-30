@@ -1,8 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .models import User, Profile
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.shortcuts import redirect, render
+
+from .models import Profile, User
 
 
 class RegisterForm(UserCreationForm):

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class SendingStatus(models.TextChoices):
     SUCCESS = 'success', 'Отправлено успешно'
     ERROR = 'error', 'Ошибка при отправке'

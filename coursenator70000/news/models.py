@@ -3,6 +3,7 @@ from django.utils import timezone
 
 from .enums import NotificationStatus
 
+
 class News(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()

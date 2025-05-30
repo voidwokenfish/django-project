@@ -1,10 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.template.context_processors import request
 
-from .enums import RecipientType, SendingStatus
 from news.models import News
-from django.contrib.auth import get_user_model
 
+from .enums import RecipientType, SendingStatus
 
 User = get_user_model()
 

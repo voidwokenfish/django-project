@@ -1,18 +1,17 @@
-from django.db.models import Max
-
-from django.utils import timezone
-
 from django import http
-from django.shortcuts import render, redirect
-from django.template.context_processors import request
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-
-from .models import Topic, Course, Module, Lesson, Enrollment, UserLessonCompleted
-from django.views.generic import UpdateView
+from django.db.models import Max
+from django.shortcuts import redirect, render
+from django.template.context_processors import request
 from django.urls import reverse
+from django.utils import timezone
+from django.views.generic import UpdateView
 
 from quizzes.models import Quiz, QuizAttempt
+
+from .models import (Course, Enrollment, Lesson, Module, Topic,
+                     UserLessonCompleted)
 
 User = get_user_model()
 

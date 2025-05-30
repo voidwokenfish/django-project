@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import quiz_detail, get_questions, get_answer, get_finish
+
+from .views import get_answer, get_finish, get_questions, quiz_detail
 
 urlpatterns = [
     path('quiz/<int:pk>/', quiz_detail, name='quiz_detail'),

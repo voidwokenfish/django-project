@@ -1,16 +1,15 @@
-from django.contrib.auth import login, get_user_model
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, HttpResponseRedirect
-
-from .forms import RegisterForm, LoginForm, ProfileAvatarForm
-
-from .models import Profile
-from courses.models import Course, Enrollment
+from django.conf import settings
 from django.contrib import auth, messages
+from django.contrib.auth import get_user_model, login
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.shortcuts import HttpResponseRedirect, redirect, render
 from django.urls import reverse
 
-from django.core.mail import send_mail
-from django.conf import settings
+from courses.models import Course, Enrollment
+
+from .forms import LoginForm, ProfileAvatarForm, RegisterForm
+from .models import Profile
 
 User = get_user_model()
 

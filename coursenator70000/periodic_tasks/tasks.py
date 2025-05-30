@@ -1,5 +1,6 @@
-from coursenator70000 import celery_app
 from loguru import logger
+
+from coursenator70000 import celery_app
 from mailing.models import EmailLetter
 
 

@@ -1,7 +1,7 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-from courses.models import Module
+from django.db import models
 
+from courses.models import Module
 
 User = get_user_model()
 

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class NotificationStatus(models.TextChoices):
     NOT_SEND = 'not_send', 'Не уведомлять'
     TO_SEND = 'to_send', 'Уведомить'
