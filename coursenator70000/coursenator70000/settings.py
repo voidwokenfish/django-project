@@ -164,3 +164,5 @@ REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
 
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/3'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+SITE_URL = config("SITE_URL", cast=str, default='CatCourses.com')
