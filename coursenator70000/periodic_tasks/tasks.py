@@ -6,6 +6,7 @@ from mailing.enums import RecipientType, SendingStatus
 from services.mails.utils import MailConstructor, send_mail
 from services.mails.enums import MailTrigger
 from news.enums import NotificationStatus
+from django.contrib.auth import get_user_model
 
 
 @celery_app.app.task()
@@ -62,8 +63,30 @@ def send_emails() -> None:
 
         logger.info(f"Завершена задача рассылки email сообщений. Обработанно {count} объектов.")
 
+@celery_app.app.task()
+def send_user_email(trigger_value: str, user_id: int) -> None:
+    """Задача отправки писем пользователям по триггерам:
+     RESET_PASSWORD, REGISTER_CONFIRM, MAIL_CONFIRM, GREETING, SUPPORT_RESPONSE"""
+    User = get_user_model()
+    user = User.objects.get(id=user_id)
+    trigger = MailTrigger(trigger_value)
+    trigger_type = type(trigger)
 
+    logger.info(f'Запуск задачи отправки письма пользователю {user.id} по триггеру {trigger}')
 
+    try:
+        mail_data = MailConstructor(
+            user=user,
+            trigger=trigger,
+            email=user.email,
+            subject=None,
+            body=None,
+            attachments=None
+        ).get_data()
+        send_mail(**mail_data)
 
+    except Exception as err:
+        logger.error(f'Ошибка при отправке email сообщения: {err}')
 
-
+    else:
+        logger.success(f'Успешно отправлено email сообщение для пользователя {user.id} по триггеру {trigger}')

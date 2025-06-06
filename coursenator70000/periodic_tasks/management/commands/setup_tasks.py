@@ -28,3 +28,14 @@ class Command(BaseCommand):
                 "task": "coursenator70000.periodic_tasks.tasks.send_emails",
             }
         )
+
+        every_three_min_cron, _ = CrontabSchedule.objects.get_or_create(
+            minute="*/3", timezone=settings.TIME_ZONE
+        )
+        _ = PeriodicTask.objects.update_or_create(
+            name="Отправка писем пользователям по триггерам: RESET_PASSWORD, REGISTER_CONFIRM, MAIL_CONFIRM, GREETING, SUPPORT_RESPONSE",
+            defaults={
+                "crontab": every_three_min_cron,
+                "task": "coursenator70000.periodic_tasks.tasks.send_user_email",
+            }
+        )

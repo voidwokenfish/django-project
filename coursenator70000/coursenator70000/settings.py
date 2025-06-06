@@ -156,8 +156,7 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER',cast=str, default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', cast=str, default='')
 
-DEFAULT_FROM_EMAIL = ""
-
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", cast=str, default='broman6700@gmail.com')
 
 REDIS_HOST = config('REDIS_HOST', default='localhost')
 REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
@@ -165,4 +164,6 @@ REDIS_PORT = config('REDIS_PORT', default=6379, cast=int)
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/3'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
-SITE_URL = config("SITE_URL", cast=str, default='CatCourses.com')
+SITE_URL = config("SITE_URL", cast=str, default='http://127.0.0.1:8000')
+
+#CELERY_TASK_ALWAYS_EAGER = True

@@ -2,14 +2,18 @@ from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
 from django.shortcuts import HttpResponseRedirect, redirect, render
 from django.urls import reverse
 
 from courses.models import Course, Enrollment
 
+from loguru import logger
+
 from .forms import LoginForm, ProfileAvatarForm, RegisterForm
 from .models import Profile
+
+from periodic_tasks.tasks import send_user_email
+from services.mails.enums import MailTrigger
 
 User = get_user_model()
 
@@ -19,7 +23,8 @@ def register(request):
         if form.is_valid():
             user = form.save()
             profile = Profile.objects.create(user=user)
-            send_mail("Успешная регистрация!", "Вы молодец!", settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+            send_user_email.delay(MailTrigger.REGISTER_CONFIRM.value, user.id)
+
             return redirect('login')
 
     else:

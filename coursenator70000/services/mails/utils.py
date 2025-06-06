@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
+from loguru import logger
+
 from mailing.helpers import account_activation_token
 
 from .enums import MailTrigger
@@ -44,12 +46,12 @@ class MailConstructor:
 
         self._add_common()
 
-        trigger_map[self.trigger]()
+        trigger_map[self.trigger.value]()
 
         return self._data
 
     def _add_common(self):
-        """Метод формирования общего контекста."""
+        """Метод формирования общего контекста"""
         self._data.update(
             {
                 "message_context": {"SITE_URL": settings.SITE_URL, },
@@ -88,10 +90,13 @@ class MailConstructor:
         })
         uid = urlsafe_base64_encode(force_bytes(self.user.pk))
         token = account_activation_token.make_token(self.user)
+        endpoint = f"{settings.SITE_URL.rstrip('/')}{reverse('register_confirm', kwargs={'uid': uid, 'token': token})}"
+        logger.info(f"SITE_URL: '{settings.SITE_URL}'")
+        logger.info(f"Endpoint: '{endpoint}'")
         self._data["message_context"].update({
             "uid": uid,
             "token": token,
-            "endpoint": self.request.build.absolute_uri(reverse('mails:register_confirm', kwargs={"uid":uid, "token":token})),
+            "endpoint": endpoint,
         })
 
     def _reset_password_data(self):
@@ -139,7 +144,7 @@ def send_mail(
         body = message_template
 
     else:
-        subject = render_to_string
+        subject = render_to_string(subject_template, message_context) #тут была просто ф-я
         subject = "".join(subject.splitlines())
         body = render_to_string(message_template, message_context)
 
@@ -148,6 +153,7 @@ def send_mail(
         body=body,
         to=[recipient],
     )
+
     if attachments:
         for attachment in attachments:
             mail.attach_file(attachment.path)
