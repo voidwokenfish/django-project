@@ -46,7 +46,7 @@ class MailConstructor:
 
         self._add_common()
 
-        trigger_map[self.trigger.value]()
+        trigger_map[self.trigger]()
 
         return self._data
 
@@ -144,7 +144,7 @@ def send_mail(
         body = message_template
 
     else:
-        subject = render_to_string(subject_template, message_context) #тут была просто ф-я
+        subject = render_to_string(subject_template)
         subject = "".join(subject.splitlines())
         body = render_to_string(message_template, message_context)
 

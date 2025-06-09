@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_celery_beat',
+    'nested_admin',
+    'solo',
+
 
     'courses',
     'users',
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'mailing',
     'news',
     'periodic_tasks',
+    'configs',
 ]
 
 AUTH_USER_MODEL = 'users.User'

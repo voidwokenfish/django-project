@@ -64,13 +64,12 @@ def send_emails() -> None:
         logger.info(f"Завершена задача рассылки email сообщений. Обработанно {count} объектов.")
 
 @celery_app.app.task()
-def send_user_email(trigger_value: str, user_id: int) -> None:
+def send_user_email(trigger: MailTrigger, user_id: int) -> None:
     """Задача отправки писем пользователям по триггерам:
      RESET_PASSWORD, REGISTER_CONFIRM, MAIL_CONFIRM, GREETING, SUPPORT_RESPONSE"""
     User = get_user_model()
     user = User.objects.get(id=user_id)
-    trigger = MailTrigger(trigger_value)
-    trigger_type = type(trigger)
+    # trigger = MailTrigger(trigger_value)
 
     logger.info(f'Запуск задачи отправки письма пользователю {user.id} по триггеру {trigger}')
 
