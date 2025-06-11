@@ -2,13 +2,15 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.http import require_POST
 
+from .helpers import account_activation_token
 from .forms import SubscriptionForm
 from .models import Subscription
+from users.forms import SetNewPasswordForm
 
 
 @require_POST
@@ -39,13 +41,19 @@ def register_confirm(request, uid, token):
     """Функция декодирует данные и завершает регистрацию"""
     uid_decoded = urlsafe_base64_decode(uid).decode()
     user = User.objects.get(pk=uid_decoded) #это я получаю пользователя шоб узнать хто это
+    try:
+        if user is not None and account_activation_token.check_token(user, token):
+            #.check_token сравниваеит данные user и token(там тоже данные user но в токен обернутые)
+            user.is_active = True
+            user.save()
+            return HttpResponseRedirect("/")
 
-    if user is not None and default_token_generator.check_token(user, token):
-        #.check_token сравниваеит данные user и token(там тоже данные user но в токен обернутые)
-        return HttpResponse("Регистрация прошла успешно!")
+        else:
+            return HttpResponse("Произошла ошибка.")
 
-    else:
-        return HttpResponse("Произошла ошибка.")
+    except Exception as err:
+        print(err)
+
 
 def email_confirm(request, uid, token):
     """Функция декодирует данные полученные от """
@@ -64,10 +72,24 @@ def email_confirm(request, uid, token):
 
 def reset_password(request, uid, token):
     """Функция декодирует данные и перенаправляет пользователя на страницу смены пароля"""
-    uid_decoded = urlsafe_base64_decode(uid).decode()
-    user = User.objects.get(pk=uid_decoded)
+    try:
+        uid_decoded = urlsafe_base64_decode(uid).decode()
+        user = User.objects.get(pk=uid_decoded)
+    except (User.DoesNotExist, ValueError, TypeError):
+        user = None
 
-    if user is not None and default_token_generator.check_token(user, token):
-        return HttpResponse("")
+    if user is not None and account_activation_token.check_token(user, token):
+        if request.method == 'POST':
+            form = SetNewPasswordForm(request.POST)
+            if form.is_valid():
+                password = form.cleaned_data['password1']
+                user.set_password(password)
+                user.save()
+                return HttpResponse("Пароль успешно изменён. <a href='/login/'>Войти</a>")
+        else:
+            form = SetNewPasswordForm()
+
+        return render(request, 'reset_password.html', {'form': form})
+
     else:
-        return HttpResponse("")
+        return HttpResponse("Ссылка недействительна или устарела.")

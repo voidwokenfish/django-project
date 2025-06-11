@@ -13,7 +13,7 @@
     <div id="subscribe-modal">
         <button class="close-btn" onclick="hideModal()">×</button>
         <h2>Подпишитесь на нашу рассылку, чтобы быть в&nbsp;курсе о новых события Кошачьих Курсов!</h2>
-        <form method="post" action="{% url 'subscribe_email' %}">
+        <form method="post" action="{% url 'mailing:subscribe_email' %}">
             {% csrf_token %}
             <input type="email" name="email" placeholder="Введите ваш email" required>
             <button type="submit">Подписаться</button>

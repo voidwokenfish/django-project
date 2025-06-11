@@ -71,7 +71,7 @@ def send_user_email(trigger: MailTrigger, user_id: int) -> None:
     user = User.objects.get(id=user_id)
     # trigger = MailTrigger(trigger_value)
 
-    logger.info(f'Запуск задачи отправки письма пользователю {user.id} по триггеру {trigger}')
+    logger.info(f'Запуск задачи отправки письма пользователю {user} по триггеру {trigger}')
 
     try:
         mail_data = MailConstructor(

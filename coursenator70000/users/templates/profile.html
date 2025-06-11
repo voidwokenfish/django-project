@@ -16,6 +16,7 @@
             <input type="file" name="avatar" id="id_avatar" style="display:none;" onchange="this.form.submit();">
         </form>
         <p>{{ user.username }}</p>
+        <a href="{% url 'send_reset_password_email' user.id %}" class="btn">Изменить пароль</a>
     </div>
     <div class="divider" style="margin: 0;"></div>
     <div class="profile__enrollments">

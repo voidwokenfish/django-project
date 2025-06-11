@@ -2,8 +2,11 @@ from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import HttpResponseRedirect, redirect, render
 from django.urls import reverse
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 from courses.models import Course, Enrollment
 
@@ -75,3 +78,29 @@ def profile(request, username):
         "enrollments": enrollments,
         "form": form
     })
+
+def send_reset_password_email(request, user_id_or_email: str | int):
+    try:
+        user = user_checker(request, user_id_or_email)
+        if user:
+            send_user_email.delay(MailTrigger.RESET_PASSWORD.value, user.id)
+            return HttpResponseRedirect(f"/profile/{user.username}")
+        else:
+            return HttpResponse("Пользователь с такими данными не найден. Повторите попытку.")
+    except Exception as err:
+        logger.error(err)
+        return HttpResponse("Ошибка при отправке письма")
+
+def user_checker(request, data: int | str) -> User or None:
+    """Функция принимает в себя либо id пользователя, либо электронную почту и возвращает пользователя, если он есть."""
+    try:
+        if validate_email(data):
+            user = User.objects.filter(email=data).first()
+
+        else:
+            user = User.objects.get(username=data)
+
+        return user if user else None
+
+    except ValidationError as err:
+        logger.error(err)
