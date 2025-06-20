@@ -12,7 +12,7 @@ from courses.models import Course, Enrollment
 
 from loguru import logger
 
-from .forms import LoginForm, ProfileAvatarForm, RegisterForm
+from .forms import LoginForm, ProfileAvatarForm, RegisterForm, PasswordForgotForm, SetNewPasswordForm
 from .models import Profile
 
 from periodic_tasks.tasks import send_user_email
@@ -79,11 +79,14 @@ def profile(request, username):
         "form": form
     })
 
-def send_reset_password_email(request, user_id_or_email: str | int):
+def send_reset_password_email(request, data: str):
     try:
-        user = user_checker(request, user_id_or_email)
+        logger.info(type(data))
+        logger.info(data)
+        user = user_checker(request, data)
         if user:
             send_user_email.delay(MailTrigger.RESET_PASSWORD.value, user.id)
+            messages.success(request, "Письмо для смены пароля отправлено на вашу почту.")
             return HttpResponseRedirect(f"/profile/{user.username}")
         else:
             return HttpResponse("Пользователь с такими данными не найден. Повторите попытку.")
@@ -91,16 +94,67 @@ def send_reset_password_email(request, user_id_or_email: str | int):
         logger.error(err)
         return HttpResponse("Ошибка при отправке письма")
 
-def user_checker(request, data: int | str) -> User or None:
+def user_checker(request, data: str) -> User or None:
     """Функция принимает в себя либо id пользователя, либо электронную почту и возвращает пользователя, если он есть."""
     try:
-        if validate_email(data):
+        if data.isdigit():
+            user = User.objects.filter(id=int(data)).first()
+            logger.info(f"Поиск пользователя по id {data}")
+
+        elif is_email(data):
             user = User.objects.filter(email=data).first()
+            logger.info(f"Поиск пользователя по email: {data}")
 
         else:
-            user = User.objects.get(username=data)
+            user = None
+            logger.info(f"Неверный формат данных {data}")
 
-        return user if user else None
+        logger.info(f"Найден пользователь {user}")
+        return user
 
+    except Exception as err:
+        logger.error(err)
+        return None
+
+def is_email(value: str) -> bool:
+    try:
+        validate_email(value)
+        return True
     except ValidationError as err:
         logger.error(err)
+        return False
+
+def reset_password_with_email(request):
+    if request.method == 'POST':
+        form = PasswordForgotForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            send_reset_password_email(request, email)
+            return HttpResponse("Письмо для смены пароля отправлено на почту.")
+
+    else:
+        form = PasswordForgotForm()
+
+    return render(request, 'reset_password_with_email.html', {'form': form})
+
+def reset_password_form_view(request, user_id):
+    allowed_user_id = request.session.get('password_reset_user_id')
+    if allowed_user_id != user_id:
+        return HttpResponseRedirect("/")
+
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        return HttpResponse("Пользователь не найден")
+
+    if request.method == 'POST':
+        form = SetNewPasswordForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password1']
+            user.set_password(password)
+            user.save()
+            send_user_email.delay(MailTrigger.GREETING.value, user.id)
+            return HttpResponse("Пароль успешно изменён. <a href='/login/'>Войти</a>")
+    else:
+        form = SetNewPasswordForm()
+        return render(request, 'password_change_form.html', {'form': form})

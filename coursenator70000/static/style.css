@@ -697,6 +697,25 @@ progress::-webkit-progress-value {
     cursor: pointer;
 }
 
+.profile__user .messages {
+    list-style: none;
+    padding-left: 0;
+    margin: 8px 0 0 0;
+    max-width: 100%;
+    background-color: #d4edda; /* светло-зеленый фон для успеха */
+    color: #155724; /* темно-зеленый текст */
+    border-radius: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.profile__user .messages li.message {
+    padding: 6px 12px;
+}
+
 .divider {
     height: 2px;
     width: 100%;

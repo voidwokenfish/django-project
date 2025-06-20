@@ -35,7 +35,7 @@ def index(request, topic_id=None, page_number=1):
 
 def course_detail(request, pk):
     course = Course.objects.get(pk=pk)
-    modules = course.module_set.all()
+    modules = course.modules.all()
 
     if request.user.is_authenticated:
         enrolled = Enrollment.objects.filter(course=course, user=request.user)
@@ -51,7 +51,7 @@ def module_detail(request, pk):
     module = Module.objects.get(pk=pk)
     course = module.course
 
-    lessons = list(module.lesson_set.all())
+    lessons = list(module.lessons.all())
     quizzes = list(Quiz.objects.filter(module=module))
 
     # Объединяем уроки и тесты, сортируя по course_order

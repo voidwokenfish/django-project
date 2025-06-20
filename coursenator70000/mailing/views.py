@@ -3,14 +3,16 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, reverse
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.http import require_POST
 
 from .helpers import account_activation_token
 from .forms import SubscriptionForm
 from .models import Subscription
-from users.forms import SetNewPasswordForm
+
+from periodic_tasks.tasks import send_user_email
+from services.mails.enums import MailTrigger
 
 
 @require_POST
@@ -79,17 +81,7 @@ def reset_password(request, uid, token):
         user = None
 
     if user is not None and account_activation_token.check_token(user, token):
-        if request.method == 'POST':
-            form = SetNewPasswordForm(request.POST)
-            if form.is_valid():
-                password = form.cleaned_data['password1']
-                user.set_password(password)
-                user.save()
-                return HttpResponse("Пароль успешно изменён. <a href='/login/'>Войти</a>")
-        else:
-            form = SetNewPasswordForm()
-
-        return render(request, 'reset_password.html', {'form': form})
-
+        request.session['password_reset_user_id'] = user.id
+        return HttpResponseRedirect(reverse("reset_password_form_view", args=[user.id]))
     else:
         return HttpResponse("Ссылка недействительна или устарела.")

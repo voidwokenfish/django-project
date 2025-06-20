@@ -3,14 +3,16 @@ from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 
-from .views import profile, register, user_login, send_reset_password_email
+from .views import profile, register, user_login, send_reset_password_email, reset_password_with_email, reset_password_form_view
 
 urlpatterns = [
     path('register/', register, name='register'),
     path('login/', user_login, name='login'),
     path('/', LogoutView.as_view(next_page='/'), name='logout'),
     path('profile/<str:username>/', profile, name='profile'),
-    path('reset/<int:user_id>', send_reset_password_email, name='send_reset_password_email'),
+    path('reset/<data>/', send_reset_password_email, name='send_reset_password_email'),
+    path('login/forgotpassword/', reset_password_with_email, name='reset_password_with_email'),
+    path('change_password/<int:user_id>/', reset_password_form_view, name='reset_password_form_view'),
 ]
 
 if settings.DEBUG:
