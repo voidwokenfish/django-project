@@ -12,7 +12,7 @@ from courses.models import Course, Enrollment
 
 from loguru import logger
 
-from .forms import LoginForm, ProfileAvatarForm, RegisterForm, PasswordForgotForm, SetNewPasswordForm
+from .forms import LoginForm, ProfileAvatarForm, RegisterForm, PasswordForgotForm, SetNewPasswordForm, SetNewEmailForm
 from .models import Profile
 
 from periodic_tasks.tasks import send_user_email
@@ -79,6 +79,20 @@ def profile(request, username):
         "form": form
     })
 
+def send_change_email_email(request, data: str):
+    """Функция принимает в есбя id пользователя и создает задачу на отправку письма для смены почты"""
+    try:
+        user = user_checker(request, data)
+        if user:
+            send_user_email.delay(MailTrigger.MAIL_CONFIRM.value, user.id)
+            messages.success(request, "Письмо для смены почты отправлено на вашу почту.")
+            return HttpResponseRedirect(f"/profile/{user.username}")
+        else:
+            return HttpResponse("Пользователь с такими данными не найден. Повторите попытку.")
+    except Exception as err:
+        logger.error(err)
+        return HttpResponse("Ошибка при отправке письма")
+
 def send_reset_password_email(request, data: str):
     try:
         logger.info(type(data))
@@ -144,6 +158,7 @@ def reset_password_form_view(request, user_id):
 
     try:
         user = User.objects.get(pk=user_id)
+
     except User.DoesNotExist:
         return HttpResponse("Пользователь не найден")
 
@@ -153,8 +168,32 @@ def reset_password_form_view(request, user_id):
             password = form.cleaned_data['password1']
             user.set_password(password)
             user.save()
-            send_user_email.delay(MailTrigger.GREETING.value, user.id)
             return HttpResponse("Пароль успешно изменён. <a href='/login/'>Войти</a>")
+
+    else:
+        form = SetNewPasswordForm()
+        return render(request, 'password_change_form.html', {'form': form})
+
+def reset_email_form_view(request, user_id):
+    allowed_user_id = request.session.get('email_reset_user_id')
+    logger.info(f'Полученный request.session {allowed_user_id}')
+    if allowed_user_id != user_id:
+        return HttpResponseRedirect("/")
+
+    try:
+        user = User.objects.get(pk=user_id)
+
+    except User.DoesNotExist:
+        return HttpResponse("Пользователь не найден")
+
+    if request.method == 'POST':
+        form = SetNewEmailForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            user.set_email(email)
+            user.save()
+            return HttpResponse("Почта успешно изменена. <a href='/login/'>Войти</a>")
+
     else:
         form = SetNewPasswordForm()
         return render(request, 'password_change_form.html', {'form': form})

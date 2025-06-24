@@ -70,3 +70,10 @@ class PasswordForgotForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         return cleaned_data
+
+class SetNewEmailForm(forms.Form):
+    email = forms.EmailField(label="", required=True, widget=forms.TextInput(attrs={}))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data

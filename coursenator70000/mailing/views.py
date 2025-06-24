@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, reverse
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.http import require_POST
+from loguru import logger
 
 from .helpers import account_activation_token
 from .forms import SubscriptionForm
@@ -59,15 +60,18 @@ def register_confirm(request, uid, token):
 
 def email_confirm(request, uid, token):
     """Функция декодирует данные полученные от """
-    uid_decoded = urlsafe_base64_decode(uid).decode()
-    user = User.objects.get(pk=uid_decoded)  # это я получаю пользователя шоб узнать хто это
+    try:
+        uid_decoded = urlsafe_base64_decode(uid).decode()
+        user = User.objects.get(pk=uid_decoded)
+    except (User.DoesNotExist, ValueError, TypeError):
+        user = None
 
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        return HttpResponse("Активация аккаунта прошла успешно!")
+    if user is not None and account_activation_token.check_token(user, token):
+        request.session['email_reset_user_id'] = user.id
+        logger.info(f'Передаем request.session {request.session}')
+        return HttpResponseRedirect(reverse("reset_email_form_view", args=[user.id]))
     else:
-        return HttpResponse("Произошла ошибка.")
+        return HttpResponse("Ссылка недействительна или устарела.")
 
 
 
@@ -82,6 +86,7 @@ def reset_password(request, uid, token):
 
     if user is not None and account_activation_token.check_token(user, token):
         request.session['password_reset_user_id'] = user.id
+        logger.info(f'Передаем request.session {request.session}')
         return HttpResponseRedirect(reverse("reset_password_form_view", args=[user.id]))
     else:
         return HttpResponse("Ссылка недействительна или устарела.")

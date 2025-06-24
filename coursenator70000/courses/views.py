@@ -1,5 +1,6 @@
 from django import http
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Max
 from django.shortcuts import redirect, render
@@ -7,8 +8,11 @@ from django.template.context_processors import request
 from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import UpdateView
+from loguru import logger
 
 from quizzes.models import Quiz, QuizAttempt
+from transactions.models import Transaction
+from services.payments.payment import PaymentService
 
 from .models import (Course, Enrollment, Lesson, Module, Topic,
                      UserLessonCompleted)
@@ -170,5 +174,17 @@ def complete_lesson(request, pk):
     else:
         return redirect('index')
 
+@login_required
+def payment_test(request):
+    user = request.user
+    course = Course.objects.get(id=2)
+    description = f"Оплата курса {course.title}"
+    transaction = Transaction.objects.create(
+        user=user,
+        course=course,
+        amount=course.price,
+        description=description
+    )
+    url = PaymentService(transaction).execute()
 
-
+    return redirect(url)

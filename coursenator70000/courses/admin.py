@@ -95,14 +95,14 @@ class CourseAdmin(NestedModelAdmin):
     finished.short_description = "Окончили"
     modules.short_description = "Модули"
 
-    def response_add(self, request, obj, post_url_continue=None):
-        pass
-
-    def response_change(self, request, obj):
-        pass
-
-    def _is_valid(self, request, obj):
-        pass
+    # def response_add(self, request, obj, post_url_continue=None):
+    #     pass
+    #
+    # def response_change(self, request, obj):
+    #     pass
+    #
+    # def _is_valid(self, request, obj):
+    #     pass
 
 
 

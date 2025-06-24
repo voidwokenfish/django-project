@@ -4,7 +4,7 @@ from django.urls import path
 
 from .views import (CourseUpdateView, complete_lesson, course_detail,
                     enroll_student, httptest, index, lesson_detail,
-                    module_detail)
+                    module_detail, payment_test)
 
 urlpatterns = [
     path('', index, name='index'),
@@ -17,6 +17,7 @@ urlpatterns = [
     path('test', httptest, name='httptest'),
     path('course/<int:pk>/enroll', enroll_student, name='enroll_student'),
     path('course/module/lesson/<int:pk>/complete', complete_lesson, name='complete_lesson'),
+    path('course/pay/', payment_test, name='payment_test'),
 ]
 
 if settings.DEBUG:

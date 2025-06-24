@@ -37,6 +37,10 @@
             {% endfor %}
         </ul>
     </div>
+    <div>
+        <p>{{ user.email }}</p>
+        <a href="{% url 'send_change_email_email' user.id %}" class="btn">Сменить актуальную почту</a>
+    </div>
 </div>
 
 {% endblock %}

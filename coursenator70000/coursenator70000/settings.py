@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'nested_admin',
     'solo',
-
+    'rest_framework',
 
     'courses',
     'users',
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'news',
     'periodic_tasks',
     'configs',
+    'transactions'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -169,5 +170,10 @@ CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/3'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 SITE_URL = config("SITE_URL", cast=str, default='http://127.0.0.1:8000')
+
+YOOKASSA_PAYMENT_SECRET_KEY = config("YOOKASSA_PAYMENT_SECRET_KEY", default='')
+YOOKASSA_SHOP_ID = config("YOOKASSA_SHOP_ID", default='')
+YOOKASSA_PAYMENT_REDIRECT_URL = config("YOOKASSA_PAYMENT_REDIRECT_URL")
+YOOKASSA_CURRENCY = "RUB"
 
 #CELERY_TASK_ALWAYS_EAGER = True

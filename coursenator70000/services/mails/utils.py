@@ -125,10 +125,11 @@ class MailConstructor:
 
         uid = urlsafe_base64_encode(force_bytes(self.user.pk))
         token = account_activation_token.make_token(self.user)
+        endpoint = f"{settings.SITE_URL.rstrip('/')}{reverse('mailing:email_confirm', kwargs={'uid':uid, 'token':token})}"
         self._data["message_context"].update({
             "uid": uid,
             "token": token,
-            "endpoint": self.request.build.absolute_uri(reverse('mails:mail_confirm', kwargs={"uid":uid, "token":token})),
+            "endpoint": endpoint,
         })
 
 
