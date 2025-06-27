@@ -21,10 +21,14 @@ class PaymentService(BaseYooKassaService):
             },
             'confirmation': {
                 'type': 'redirect',
-                'return_url': settings.YOOKASSA_PAYMENT_REDIRECT_URL, #todo Передавать url на сервис( В ЭТОТ СЕРВИС)
+                'return_url': settings.YOOKASSA_PAYMENT_REDIRECT_URL,
             },
             'description': self.source_obj.description,
             'capture': True,
+            'metadata': {
+                "user_id": str(self.source_obj.user.id),
+                "course_id": str(self.source_obj.course.id),
+            }
         }
         return data
 

@@ -155,13 +155,7 @@ def httptest(request):
     print(q.price)
     return http.HttpResponse('test')
 
-def enroll_student(request, pk):
-    if request.user.is_authenticated:
-        course = Course.objects.get(pk=pk)
-        Enrollment.objects.create(user=request.user, course=course, enroll_date=timezone.now().date())
-        return redirect('course_detail', pk=pk)
-    else:
-        return redirect('login')
+
 
 def complete_lesson(request, pk):
     if request.user.is_authenticated:
@@ -174,10 +168,18 @@ def complete_lesson(request, pk):
     else:
         return redirect('index')
 
+# def enroll_student(request, pk):
+#     if request.user.is_authenticated:
+#         course = Course.objects.get(pk=pk)
+#         Enrollment.objects.create(user=request.user, course=course, enroll_date=timezone.now().date())
+#         return redirect('course_detail', pk=pk)
+#     else:
+#         return redirect('login')
+
 @login_required
-def payment_test(request):
+def enroll_student(request, pk):
     user = request.user
-    course = Course.objects.get(id=2)
+    course = Course.objects.get(id=pk)
     description = f"Оплата курса {course.title}"
     transaction = Transaction.objects.create(
         user=user,

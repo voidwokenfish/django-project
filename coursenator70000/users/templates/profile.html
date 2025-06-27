@@ -16,14 +16,7 @@
             <input type="file" name="avatar" id="id_avatar" style="display:none;" onchange="this.form.submit();">
         </form>
         <p>{{ user.username }}</p>
-        <a href="{% url 'send_reset_password_email' user.id %}" class="btn">Изменить пароль</a>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="message {{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+
     </div>
     <div class="divider" style="margin: 0;"></div>
     <div class="profile__enrollments">
@@ -39,7 +32,12 @@
     </div>
     <div>
         <p>{{ user.email }}</p>
-        <a href="{% url 'send_change_email_email' user.id %}" class="btn">Сменить актуальную почту</a>
+        <a href="{% url 'send_change_email_email' user.id %}">
+            <button class="btn">Сменить актуальную почту</button>
+        </a>
+        <a href="{% url 'send_reset_password_email' user.id %}">
+            <button class="btn">Изменить пароль</button>
+        </a>
     </div>
 </div>
 

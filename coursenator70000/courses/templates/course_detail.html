@@ -21,7 +21,7 @@
         {% if user.is_authenticated %}
             <form action="{% url 'enroll_student' pk=course.id %}" method="post">
                 {% csrf_token %}
-                <button class="btn" type="submit">Начать учиться</button>
+                <button class="btn" type="submit">Приобрести полный курс по цене {{ course.price }}</button>
             </form>
         {% endif %}
     {% endif %}

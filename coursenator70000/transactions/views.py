@@ -7,8 +7,17 @@ from yookassa.domain.notification import WebhookNotification
 
 import json
 
+from courses.models import Course, Enrollment
+
+
 from transactions.models import Transaction
 from transactions.enums import PaymentStatus
+
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+
+User = get_user_model()
 
 
 class YookassaWebHookView(APIView):
@@ -18,6 +27,8 @@ class YookassaWebHookView(APIView):
         """Принимает хук запросы."""
         json_string = request.body.decode('utf-8')
         data = json.loads(json_string)
+        logger.info("Запуск вью Юкассы")
+        logger.info(data)
 
         try:
             notification_object = WebhookNotification(data)
@@ -29,7 +40,19 @@ class YookassaWebHookView(APIView):
                     obj.status = PaymentStatus.SUCCESS
                     obj.error_description = None
                     obj.save(update_fields=['status', 'error_description'])
-                    #todo Сделать зачисление на курс студента.
+                    try:
+                        user_id = payment.metadata.get('user_id')
+                        course_id = payment.metadata.get('course_id')
+                        user = get_user_model().objects.get(id=user_id)
+                        course = Course.objects.get(id=course_id)
+                        Enrollment.objects.create(
+                            user=user,
+                            course=course,
+                            enroll_date=timezone.now().date()
+                        )
+                        logger.info(f"Создана запись на курс {course.id} для юзера с id {user.id}")
+                    except Exception as e:
+                        logger.error(f"Ошибка создания Enrollment {e}")
 
                     logger.info(f'Осуществлен платеж ID {obj.id} по транзакции {obj.payment_id}')
 
