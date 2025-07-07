@@ -70,7 +70,7 @@ class CourseAdmin(NestedModelAdmin):
         (
             None,
             {
-                "fields": ("title", "description", "image", "is_linear", "topics",),
+                "fields": ("title", "description", "image", "is_linear", "topics", "is_active"),
                 "description": COURSE_HELP_TEXT,
             }
         ),
