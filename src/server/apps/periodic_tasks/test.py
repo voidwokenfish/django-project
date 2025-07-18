@@ -1,9 +1,10 @@
-from server.apps.periodic_tasks.tasks import send_user_email
-from server.services.mails.enums import MailTrigger
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from server.services.mails.utils import send_mail
 from loguru import logger
+
+from server.apps.periodic_tasks.tasks import send_user_email
+from server.services.mails.enums import MailTrigger
+from server.services.mails.utils import send_mail
 
 User = get_user_model()
 

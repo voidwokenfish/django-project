@@ -15,6 +15,7 @@ class Topic(models.Model): #тема для курсов чтобы пользо
         verbose_name = "Тег"
         verbose_name_plural = "Теги"
 
+
 class Course(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")

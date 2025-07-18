@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Subscription, EmailLetter, EmailAttachment, EmailLog
+from .models import EmailAttachment, EmailLetter, EmailLog, Subscription
 
 
 @admin.register(Subscription)

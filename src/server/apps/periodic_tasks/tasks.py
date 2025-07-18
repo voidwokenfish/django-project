@@ -1,12 +1,12 @@
+from django.contrib.auth import get_user_model
 from loguru import logger
 
 from server import celery_app
-from server.apps.mailing.models import EmailLetter, Subscription, EmailLog
 from server.apps.mailing.enums import RecipientType, SendingStatus
-from server.services.mails.utils import MailConstructor, send_mail
-from server.services.mails.enums import MailTrigger
+from server.apps.mailing.models import EmailLetter, EmailLog, Subscription
 from server.apps.news.enums import NotificationStatus
-from django.contrib.auth import get_user_model
+from server.services.mails.enums import MailTrigger
+from server.services.mails.utils import MailConstructor, send_mail
 
 
 @celery_app.app.task()

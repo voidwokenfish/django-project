@@ -1,20 +1,16 @@
+import json
+
+from django.contrib.auth import get_user_model
+from django.utils import timezone
 from loguru import logger
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from yookassa.domain.notification import WebhookNotification
 
-import json
-
 from server.apps.courses.models import Course, Enrollment
-
-
-from server.apps.transactions.models import Transaction
 from server.apps.transactions.enums import PaymentStatus
-
-from django.contrib.auth import get_user_model
-from django.utils import timezone
-
+from server.apps.transactions.models import Transaction
 
 User = get_user_model()
 

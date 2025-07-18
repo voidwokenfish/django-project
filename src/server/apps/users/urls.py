@@ -3,7 +3,10 @@ from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 
-from .views import profile, register, user_login, send_reset_password_email, send_change_email_email, reset_password_with_email, reset_password_form_view, reset_email_form_view
+from .views import (profile, register, reset_email_form_view,
+                    reset_password_form_view, reset_password_with_email,
+                    send_change_email_email, send_reset_password_email,
+                    user_login)
 
 urlpatterns = [
     path('register/', register, name='register'),

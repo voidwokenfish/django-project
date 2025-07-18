@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+
 from server.apps.urls import urlpatterns as ssr_urls
 
 # urlpatterns = [

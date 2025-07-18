@@ -22,7 +22,7 @@ class Quiz(models.Model):
         verbose_name_plural = "Квизы"
 
 class QuizQuestion(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="questions")
     text = models.CharField(max_length=300)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class QuizQuestion(models.Model):
         verbose_name_plural = "Вопросы квиза"
 
 class QuizAnswer(models.Model):
-    question = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE)
+    question = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE, related_name="answers")
     text = models.CharField(max_length=300)
     is_correct = models.BooleanField(default=False)
 

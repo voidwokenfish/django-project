@@ -1,21 +1,20 @@
 from django.contrib import auth, messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.http import HttpResponse
 from django.shortcuts import HttpResponseRedirect, redirect, render
 from django.urls import reverse
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-
-from server.apps.courses.models import Enrollment
-
 from loguru import logger
 
-from .forms import LoginForm, ProfileAvatarForm, RegisterForm, PasswordForgotForm, SetNewPasswordForm, SetNewEmailForm
-from .models import Profile
-
+from server.apps.courses.models import Enrollment
 from server.apps.periodic_tasks.tasks import send_user_email
 from server.services.mails.enums import MailTrigger
+
+from .forms import (LoginForm, PasswordForgotForm, ProfileAvatarForm,
+                    RegisterForm, SetNewEmailForm, SetNewPasswordForm)
+from .models import Profile
 
 User = get_user_model()
 

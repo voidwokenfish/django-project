@@ -53,8 +53,6 @@ def _get_next_question(request):
 def get_answer(request):
     chosen_answer_id = request.POST['answer_id']
     chosen_answer = QuizAnswer.objects.get(id=chosen_answer_id)
-    print(f"Тип данных: {type(chosen_answer.is_correct)}")
-    print(f"Значение: {chosen_answer.is_correct}")
 
     if chosen_answer.is_correct:
         correct_answer = chosen_answer

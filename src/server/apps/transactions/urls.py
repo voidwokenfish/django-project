@@ -1,4 +1,5 @@
 from django.urls import path
+
 from server.apps.transactions.views import YookassaWebHookView
 
 urlpatterns = [

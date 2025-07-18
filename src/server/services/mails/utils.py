@@ -5,7 +5,6 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-
 from loguru import logger
 
 from server.apps.mailing.helpers import account_activation_token

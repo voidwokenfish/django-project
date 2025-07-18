@@ -1,8 +1,7 @@
-from django.utils import timezone
-from django.core.management import BaseCommand
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
-
 from django.conf import settings
+from django.core.management import BaseCommand
+from django.utils import timezone
+from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 
 class Command(BaseCommand):

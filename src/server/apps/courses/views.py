@@ -8,12 +8,12 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import UpdateView
 
+from server.apps.courses.models import (Course, Enrollment, Lesson, Module,
+                                        Topic, UserLessonCompleted)
 from server.apps.quizzes.models import Quiz, QuizAttempt
 from server.apps.transactions.models import Transaction
+from server.apps.users.models import Profile
 from server.services.payments.payment import PaymentService
-
-from server.apps.courses.models import (Course, Enrollment, Lesson, Module, Topic,
-                     UserLessonCompleted)
 
 User = get_user_model()
 
@@ -31,8 +31,13 @@ def index(request, topic_id=None, page_number=1):
     paginator = Paginator(courses, per_page)
     courses_paginator = paginator.page(page_number)
 
+    user = request.user
+    if user.is_authenticated:
+        profile = user.profile
+
+
     return render(request, 'index.html', context={
-        "courses": courses, "topics": topics, "courses_paginator": courses_paginator, "current_topic": topic_id
+        "courses": courses, "topics": topics, "courses_paginator": courses_paginator, "current_topic": topic_id, "profile": profile
     })
 
 def course_detail(request, pk):
@@ -188,3 +193,4 @@ def enroll_student(request, pk):
     url = PaymentService(transaction).execute()
 
     return redirect(url)
+

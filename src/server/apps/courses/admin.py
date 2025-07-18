@@ -1,10 +1,11 @@
 from django.contrib import admin
-from server.apps.quizzes.models import Quiz, QuizQuestion, QuizAnswer
-from . import help_texts
+from nested_admin.nested import (NestedModelAdmin, NestedStackedInline,
+                                 NestedTabularInline)
+
 from server.apps.courses.help_texts import COURSE_HELP_TEXT
+from server.apps.quizzes.models import Quiz, QuizAnswer, QuizQuestion
 
-from nested_admin.nested import NestedModelAdmin, NestedStackedInline, NestedTabularInline
-
+from . import help_texts
 from .models import (Course, Enrollment, Lesson, Module, Topic,
                      UserLessonCompleted)
 

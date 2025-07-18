@@ -7,8 +7,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.http import require_POST
 from loguru import logger
 
-from .helpers import account_activation_token
 from .forms import SubscriptionForm
+from .helpers import account_activation_token
 from .models import Subscription
 
 

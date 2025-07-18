@@ -2,8 +2,8 @@ from django.conf import settings
 from loguru import logger
 from yookassa import Payment
 
-from server.services.payments.base import BaseYooKassaService
 from server.apps.transactions.enums import PaymentStatus
+from server.services.payments.base import BaseYooKassaService
 
 
 class PaymentService(BaseYooKassaService):

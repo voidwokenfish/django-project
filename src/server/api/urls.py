@@ -5,7 +5,6 @@ from rest_framework import permissions
 
 from server.api.v1 import urls as urls_v1
 
-
 API_TITLE = 'Cat Courses'
 
 schema_view_v1 = get_schema_view(

@@ -1,6 +1,7 @@
 from django.db import models
 from solo.models import SingletonModel
 
+
 class Configuration(SingletonModel):
     """Модель настроек."""
 
