@@ -98,8 +98,6 @@ def module_detail(request, pk):
         else:
             unlocked = False  # блокируем следующий, если текущий не завершен
 
-
-
     print(f" Прогресс = {progressbar}")
 
     return render(request, 'module_detail.html', {
@@ -116,8 +114,6 @@ def can_access_content(user, module, lessons, quizzes, items):
     """
     if not module.course.is_linear:
         return True
-
-
 
 def lesson_detail(request, pk):
     #Проверочку на прохождение урока
@@ -145,21 +141,6 @@ class CourseUpdateView(UpdateView):
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
 
-
-def httptest(request):
-    q = Course.objects.get(id=2)
-    q2 = Course.objects.all()
-    q3 = q2.first()
-    q4 = Course.objects.in_bulk()
-    print(q4)
-    print(q3)
-    print(q2.query) #Получить запрос
-    print(q)
-    print(q.price)
-    return http.HttpResponse('test')
-
-
-
 def complete_lesson(request, pk):
     if request.user.is_authenticated:
         lesson = Lesson.objects.get(pk=pk)
@@ -170,14 +151,6 @@ def complete_lesson(request, pk):
         return redirect('module_detail', pk=module_id)
     else:
         return redirect('index')
-
-# def enroll_student(request, pk):
-#     if request.user.is_authenticated:
-#         course = Course.objects.get(pk=pk)
-#         Enrollment.objects.create(user=request.user, course=course, enroll_date=timezone.now().date())
-#         return redirect('course_detail', pk=pk)
-#     else:
-#         return redirect('login')
 
 @login_required
 def enroll_student(request, pk):

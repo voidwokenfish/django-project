@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'src.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -88,7 +88,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'src.server.wsgi.application'
+WSGI_APPLICATION = 'server.wsgi.application'
 
 
 # Database
@@ -176,3 +176,10 @@ YOOKASSA_PAYMENT_SECRET_KEY = config("YOOKASSA_PAYMENT_SECRET_KEY", default='')
 YOOKASSA_SHOP_ID = config("YOOKASSA_SHOP_ID", default='')
 YOOKASSA_PAYMENT_REDIRECT_URL = config("YOOKASSA_PAYMENT_REDIRECT_URL")
 YOOKASSA_CURRENCY = "RUB"
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}

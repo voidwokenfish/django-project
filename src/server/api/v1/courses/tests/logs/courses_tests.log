@@ -1,0 +1,1 @@
+2025-07-25 16:41:08.965 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content

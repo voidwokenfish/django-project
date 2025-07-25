@@ -77,7 +77,7 @@ class Enrollment(models.Model):
 
 class UserLessonCompleted(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    lesson = models.ForeignKey('courses.Lesson', on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     completed_datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -19,6 +19,10 @@ from django.urls import include, path
 
 from server.apps.urls import urlpatterns as ssr_urls
 
+urlpatterns = [
+    path("", include(ssr_urls)),
+]
+
 # urlpatterns = [
 #     path('', include("apps.courses.urls")),
 #     path('', include('apps.users.urls')),
@@ -27,6 +31,3 @@ from server.apps.urls import urlpatterns as ssr_urls
 #     path('', include('apps.transactions.urls')),
 # ]
 
-urlpatterns = [
-    path("", include(ssr_urls)),
-]

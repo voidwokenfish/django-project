@@ -2,6 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 from django.urls import include, path
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
 
 from .views import (profile, register, reset_email_form_view,
                     reset_password_form_view, reset_password_with_email,
@@ -18,6 +20,8 @@ urlpatterns = [
     path('login/forgotpassword/', reset_password_with_email, name='reset_password_with_email'),
     path('changepassword/<int:user_id>/', reset_password_form_view, name='reset_password_form_view'),
     path('changeemail/<int:user_id>/', reset_email_form_view, name='reset_email_form_view'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 if settings.DEBUG:

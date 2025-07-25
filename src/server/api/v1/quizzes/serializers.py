@@ -12,7 +12,6 @@ class QuizAnswerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class SubmitAnswerSerializer(serializers.Serializer):
     question = serializers.IntegerField()
     answer = serializers.IntegerField()
