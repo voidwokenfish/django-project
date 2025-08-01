@@ -143,6 +143,7 @@ def test_quiz_finish(auth_client, quiz_data, user):
     assert attempt.score == score
 
 def test_quiz_attempt_update(auth_client, quiz_data, user):
+    """Тест квиза на обновление данных последней попытки и ее возврат"""
 
     quiz = quiz_data["quiz"]
     user = user

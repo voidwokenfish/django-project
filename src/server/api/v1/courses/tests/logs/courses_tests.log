@@ -1,1 +1,559 @@
 2025-07-25 16:41:08.965 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content
+2025-07-30 09:53:37.417 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-07-30 09:53:37.417 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001F2BA53F850>
+course_data = {'course': <Course: Тестовый курс0>, 'enrollments': [<Enrollment: Тестовый курс0, testemail@test.test>, <Enrollment: Т...dules': [<Module: Тестовый модуль0>, <Module: Тестовый модуль1>, <Module: Тестовый модуль2>], 'user': <User: testuser>}
+
+    def test_get_course_content_no_enrollments(auth_client, course_data):
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/v1/courses/{course.id}/content/")
+    
+        expected_course_data = CourseDetailSerializer(
+            course_data["course"]
+        ).data
+        expected_module_data = ModuleListSerializer(
+            course_data["modules"], many=True
+        ).data
+    
+        assert response.status_code == 200
+        assert response.data["course"] == expected_course_data
+        assert response.data["modules"] == expected_module_data
+>       assert response.data["enrollments"] == None
+E       AssertionError: assert [{'id': 20, 'course': {'id': 161, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u04410', 'image': '/media/defaultpfp.jpg', 'price': '99.00'}, 'user': {'id': 172, 'username': 'testuser', 'email': 'testemail@test.test', 'is_active': False}, 'enroll_date': '2025-07-30', 'is_finished': False}, {'id': 21, 'course': {'id': 161, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u04410', 'image': '/media/defaultpfp.jpg', 'price': '99.00'}, 'user': {'id': 172, 'username': 'testuser', 'email': 'testemail@test.test', 'is_active': False}, 'enroll_date': '2025-07-30', 'is_finished': False}] == None
+
+test_api.py:85: AssertionError
+2025-07-30 09:54:50.362 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-07-30 09:54:50.363 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000220B2524130>
+course_data = {'course': <Course: Тестовый курс0>, 'enrollments': [], 'modules': [<Module: Тестовый модуль0>, <Module: Тестовый модуль1>, <Module: Тестовый модуль2>], 'user': <User: testuser>}
+
+    def test_get_course_content_no_enrollments(auth_client, course_data):
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/v1/courses/{course.id}/content/")
+    
+        expected_course_data = CourseDetailSerializer(
+            course_data["course"]
+        ).data
+        expected_module_data = ModuleListSerializer(
+            course_data["modules"], many=True
+        ).data
+    
+        course_data["enrollments"].clear()
+    
+        assert response.status_code == 200
+        assert response.data["course"] == expected_course_data
+        assert response.data["modules"] == expected_module_data
+>       assert response.data["enrollments"] == None
+E       AssertionError: assert [{'id': 22, 'course': {'id': 162, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u04410', 'image': '/media/defaultpfp.jpg', 'price': '99.00'}, 'user': {'id': 173, 'username': 'testuser', 'email': 'testemail@test.test', 'is_active': False}, 'enroll_date': '2025-07-30', 'is_finished': False}, {'id': 23, 'course': {'id': 162, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u04410', 'image': '/media/defaultpfp.jpg', 'price': '99.00'}, 'user': {'id': 173, 'username': 'testuser', 'email': 'testemail@test.test', 'is_active': False}, 'enroll_date': '2025-07-30', 'is_finished': False}] == None
+
+test_api.py:87: AssertionError
+2025-07-30 09:55:37.526 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-07-30 09:55:37.527 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001FFEB5EF820>
+course_data = {'course': <Course: Тестовый курс0>, 'enrollments': [], 'modules': [<Module: Тестовый модуль0>, <Module: Тестовый модуль1>, <Module: Тестовый модуль2>], 'user': <User: testuser>}
+
+    def test_get_course_content_no_enrollments(auth_client, course_data):
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/v1/courses/{course.id}/content/")
+    
+        expected_course_data = CourseDetailSerializer(
+            course_data["course"]
+        ).data
+        expected_module_data = ModuleListSerializer(
+            course_data["modules"], many=True
+        ).data
+    
+        course_data["enrollments"] = []
+    
+        assert response.status_code == 200
+        assert response.data["course"] == expected_course_data
+        assert response.data["modules"] == expected_module_data
+>       assert response.data["enrollments"] == None
+E       AssertionError: assert [{'id': 24, 'course': {'id': 163, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u04410', 'image': '/media/defaultpfp.jpg', 'price': '99.00'}, 'user': {'id': 174, 'username': 'testuser', 'email': 'testemail@test.test', 'is_active': False}, 'enroll_date': '2025-07-30', 'is_finished': False}, {'id': 25, 'course': {'id': 163, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u04410', 'image': '/media/defaultpfp.jpg', 'price': '99.00'}, 'user': {'id': 174, 'username': 'testuser', 'email': 'testemail@test.test', 'is_active': False}, 'enroll_date': '2025-07-30', 'is_finished': False}] == None
+
+test_api.py:87: AssertionError
+2025-07-30 09:59:05.626 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-07-30 09:59:05.626 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000024045737E50>
+course_data = {'course': <Course: Тестовый курс0>, 'course2': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестовый курс0,...mail@test.test>], 'modules': [<Module: Тестовый модуль0>, <Module: Тестовый модуль1>, <Module: Тестовый модуль2>], ...}
+
+    def test_get_course_content_no_enrollments(auth_client, course_data):
+        course = course_data["course2"]
+    
+        response = auth_client.get(f"/api/v1/courses/{course.id}/content/")
+    
+        expected_course_data = CourseDetailSerializer(
+            course_data["course2"]
+        ).data
+        expected_module_data = ModuleListSerializer(
+            course_data["modules2"], many=True
+        ).data
+    
+        assert response.status_code == 200
+        assert response.data["course"] == expected_course_data
+        assert response.data["modules"] == expected_module_data
+>       assert response.data["enrollments"] == None
+E       assert [] == None
+
+test_api.py:89: AssertionError
+2025-07-30 09:59:20.209 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-07-31 16:33:54.269 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_course_content
+2025-07-31 16:33:54.275 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002440DA17D90>
+course_data = {'course': <Course: Тестовый курс0>, 'course2': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестовый курс0, testemail@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'modules': <Module: Тестовый модуль0>, ...}
+
+    def test_get_course_content(auth_client, course_data):
+        """Тест course_content на возврат данных о курсе,
+         его модулей и зачислений на него пользователем"""
+    
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/v1/courses/{course.id}/content/")
+    
+        expected_course_data = CourseDetailSerializer(
+            course_data["course"]
+        ).data
+        expected_module_data = ModuleListSerializer(
+            course_data["modules"]
+        ).data
+        expected_enrollment_data = EnrollmentSerializer(
+            course_data["enrollments"], many=True
+        ).data
+    
+        assert response.status_code == 200
+        assert response.data["course"] == expected_course_data
+>       assert response.data["modules"] == expected_module_data
+E       AssertionError: assert [{'id': 189, 'title': 'Тестовый модуль0', 'course': 168}] == {'id': 189, 'title': 'Тестовый модуль0', 'course': 168}
+E         
+E         Full diff:
+E         - {'id': 189, 'title': 'Тестовый модуль0', 'course': 168}
+E         + [{'id': 189, 'title': 'Тестовый модуль0', 'course': 168}]
+E         ? +                                                       +
+
+test_api.py:78: AssertionError
+2025-08-01 12:06:14.205 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 12:06:14.217 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001807B6269E0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...0, testemail@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'module': <Module: Тестовый модуль0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/modules/{module.id}/content")
+    
+>       lessons = list(course_data["lesson"])
+E       KeyError: 'lesson'
+
+test_api.py:123: KeyError
+2025-08-01 12:08:07.130 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 12:08:07.131 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000017EF0C2EAD0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...0, testemail@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'module': <Module: Тестовый модуль0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/modules/{module.id}/content")
+    
+>       lessons = course_data["lesson"]
+E       KeyError: 'lesson'
+
+test_api.py:123: KeyError
+2025-08-01 12:09:37.572 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 12:09:37.572 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002A0E3A77FA0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/modules/{module.id}/content")
+    
+>       lessons = list(course_data["lesson"])
+E       TypeError: 'Lesson' object is not iterable
+
+test_api.py:124: TypeError
+2025-08-01 12:10:10.197 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 12:10:10.197 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001F328C46950>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/modules/{module.id}/content")
+    
+>       lessons = list(course_data["lesson"])
+E       TypeError: 'Lesson' object is not iterable
+
+test_api.py:124: TypeError
+2025-08-01 12:13:27.763 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 12:13:27.763 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000022DB91067A0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/modules/{module.id}/content")
+    
+        lessons = course_data["lesson"]
+>       quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+E       KeyError: 'quiz'
+
+test_api.py:125: KeyError
+2025-08-01 12:14:01.905 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 12:14:01.905 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001D5BB36EAD0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/modules/{module.id}/content")
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+test_api.py:129: AssertionError
+2025-08-01 14:26:23.340 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 14:26:23.361 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000025E09C16830>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/modules/{module.id}/content")
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+
+test_api.py:129: AssertionError
+2025-08-01 14:26:52.982 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 14:26:52.983 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001FA7765EAD0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content")
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+>       assert response.status_code == 200
+E       assert 301 == 200
+E        +  where 301 = <HttpResponsePermanentRedirect status_code=301, "text/html; charset=utf-8", url="/api/v1/modules/222/content/">.status_code
+
+test_api.py:129: AssertionError
+2025-08-01 14:27:27.939 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 14:46:03.347 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 14:46:03.377 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000021ECA55EDD0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+>       assert response.data["module"] == module
+E       AssertionError: assert {'id': 230, 'course': {'id': 189, 'topics': [], 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0443\u0440\u04410', 'description': '\u0422\u0435\u0441\u0442\u043e\u0432\u043e\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435', 'price': '99.00', 'image': '/media/defaultpfp.jpg', 'is_linear': True, 'is_active': True}, 'quizzes': [{'id': 174, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0432\u0438\u0437', 'number': 1, 'course_order': 1, 'pass_score': 60, 'is_complete_required': True, 'questions_count': 0, 'answers_count': 0}, {'id': 175, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0432\u0438\u0437', 'number': 1, 'course_order': 2, 'pass_score': 60, 'is_complete_required': True, 'questions_count': 0, 'answers_count': 0}], 'lessons': [{'id': 11, 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u0443\u0440\u043e\u043a0', 'module': 230}], 'title': '\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043c\u043e\u0434\u0443\u043b\u044c0', 'number': 0} == <Module: \u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043c\u043e\u0434\u0443\u043b\u044c0>
+
+test_api.py:131: AssertionError
+2025-08-01 14:50:15.699 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 14:50:15.699 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002401C9A7730>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+        expected_module = ModuleDetailSerializer(module).data
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+        assert response.data["module"] == expected_module
+>       assert response.data["content_items"] in data
+E       TypeError: unhashable type: 'list'
+
+test_api.py:134: TypeError
+2025-08-01 14:51:36.968 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 14:51:36.968 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000021EC5683F10>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+        expected_module = ModuleDetailSerializer(module).data
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+        assert response.data["module"] == expected_module
+        assert "content_items" in data
+        assert isinstance(response.data["content_items"], list)
+        assert "completed_lessons" in data
+        assert isinstance(response.data["completed_lessons"], list)
+        assert "completed_quizzes" in data
+        assert isinstance(response.data["completed_quizzes"], list)
+>       assert 0 <= response.data["progressbar"] >= 100
+E       assert 67 >= 100
+
+test_api.py:140: AssertionError
+2025-08-01 14:52:41.106 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 14:52:41.106 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000026B5E06B5B0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+        expected_module = ModuleDetailSerializer(module).data
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+        assert response.data["module"] == expected_module
+        assert "content_items" in data
+        assert isinstance(data["content_items"], list)
+        assert "completed_lessons" in data
+        assert isinstance(data["completed_lessons"], list)
+        assert "completed_quizzes" in data
+        assert isinstance(data["completed_quizzes"], list)
+>       assert 0 <= data["progressbar"] >= 100
+E       assert 67 >= 100
+
+test_api.py:140: AssertionError
+2025-08-01 14:53:32.728 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 15:10:55.888 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 15:10:55.922 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001498A59A6E0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+        expected_module = ModuleDetailSerializer(module).data
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+    
+        assert response.data["module"] == expected_module
+    
+        content_items = data["content_items"]
+        assert isinstance(content_items, list)
+        assert content_items
+        item = content_items[0]
+        assert "type" in item
+        assert "obj" in item
+        assert "is_unlocked" in item
+    
+        assert "completed_lessons" in data
+        assert isinstance(data["completed_lessons"], list)
+        assert "completed_quizzes" in data
+        assert isinstance(data["completed_quizzes"], list)
+    
+>       assert data["completed_quizzes"] == quizzes[0]
+E       assert [184] == <Quiz: \u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043a\u0432\u0438\u0437>
+
+test_api.py:149: AssertionError
+2025-08-01 15:12:18.195 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 15:12:18.230 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000152DB9EEDD0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+        quizzes = course_data["quiz"], course_data["quiz_not_completed"]
+    
+        expected_quizzes = QuizDetailSerializer(quizzes, many=True).data
+    
+        expected_module = ModuleDetailSerializer(module).data
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+    
+        assert response.data["module"] == expected_module
+    
+        content_items = data["content_items"]
+        assert isinstance(content_items, list)
+        assert content_items
+        item = content_items[0]
+        assert "type" in item
+        assert "obj" in item
+        assert "is_unlocked" in item
+    
+        assert "completed_lessons" in data
+        assert isinstance(data["completed_lessons"], list)
+        assert "completed_quizzes" in data
+        assert isinstance(data["completed_quizzes"], list)
+    
+>       assert data["completed_quizzes"] == expected_quizzes[0]
+E       AssertionError: assert [186] == {'id': 186, 'questions': [], 'answers': [], 'title': 'Тестовый квиз', 'number': 1, 'course_order': 1, 'pass_score': 60, 'is_complete_required': True, 'module': 254}
+E         
+E         Full diff:
+E         + [
+E         +     186,
+E         + ]
+E         - {
+E         -     'answers': [],
+E         -     'course_order': 1,
+E         -     'id': 186,
+E         -     'is_complete_required': True,
+E         -     'module': 254,
+E         -     'number': 1,
+E         -     'pass_score': 60,
+E         -     'questions': [],
+E         -     'title': 'Тестовый квиз',
+E         - }
+
+test_api.py:152: AssertionError
+2025-08-01 15:14:40.565 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 15:14:40.566 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000020730862DD0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+    
+        expected_quiz_id = QuizDetailSerializer(course_data["quiz"]).data["id"]
+        expected_quiz_not_completed = QuizDetailSerializer(course_data["quiz_not_completed"]).data
+    
+        expected_module = ModuleDetailSerializer(module).data
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+    
+        assert response.data["module"] == expected_module
+    
+        content_items = data["content_items"]
+        assert isinstance(content_items, list)
+        assert content_items
+        item = content_items[0]
+        assert "type" in item
+        assert "obj" in item
+        assert "is_unlocked" in item
+    
+        assert "completed_lessons" in data
+        assert isinstance(data["completed_lessons"], list)
+        assert "completed_quizzes" in data
+        assert isinstance(data["completed_quizzes"], list)
+    
+>       assert data["completed_quizzes"] == expected_quiz_id
+E       assert [188] == 188
+
+test_api.py:152: AssertionError
+2025-08-01 15:15:19.024 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 15:15:19.025 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000013B0CC06DD0>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """"""
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+    
+        expected_quiz_id = QuizDetailSerializer(course_data["quiz"]).data["id"]
+        expected_quiz_not_completed = QuizDetailSerializer(course_data["quiz_not_completed"]).data
+    
+        expected_module = ModuleDetailSerializer(module).data
+    
+        response = auth_client.get(f"/api/v1/modules/{module.id}/content/")
+        data = response.json()
+    
+        assert response.status_code == 200
+    
+        assert response.data["module"] == expected_module
+    
+        content_items = data["content_items"]
+        assert isinstance(content_items, list)
+        assert content_items
+        item = content_items[0]
+        assert "type" in item
+        assert "obj" in item
+        assert "is_unlocked" in item
+    
+        assert "completed_lessons" in data
+        assert isinstance(data["completed_lessons"], list)
+        assert "completed_quizzes" in data
+        assert isinstance(data["completed_quizzes"], list)
+    
+>       assert data["completed_quizzes"] == list(expected_quiz_id)
+E       TypeError: 'int' object is not iterable
+
+test_api.py:152: TypeError
+2025-08-01 15:19:21.113 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-01 15:20:12.227 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content

@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from server.api.v1.quizzes.serializers import (QuizDetailSerializer,
+                                               QuizListSerializer)
 from server.api.v1.users.serializers import UserListSerializer
 from server.apps.courses.models import (Course, Enrollment, Lesson, Module,
                                         Topic)
@@ -49,34 +51,6 @@ class CourseWriteSerializer(serializers.ModelSerializer):
         ]
 
 
-class ModuleListSerializer(serializers.ModelSerializer):
-    """Сериализатор для списка модулей"""
-
-    class Meta:
-        model = Module
-        fields = [
-            "id", "title", "course"
-        ]
-
-
-class ModuleDetailSerializer(serializers.ModelSerializer):
-    """Сериализатор для просмотра одного модуля"""
-
-    course = CourseDetailSerializer(read_only=True)
-
-    class Meta:
-        model = Module
-        fields = "__all__"
-
-
-class ModuleWriteSerializer(serializers.ModelSerializer):
-    """Сериализатор для изменения модуля"""
-
-    class Meta:
-        model = Module
-        fields = "__all__"
-
-
 class LessonListSerializer(serializers.ModelSerializer):
     """Сериализатор для списка уроков"""
 
@@ -112,3 +86,53 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enrollment
         fields = '__all__'
+
+
+class ModuleListSerializer(serializers.ModelSerializer):
+    """Сериализатор для списка модулей"""
+
+    class Meta:
+        model = Module
+        fields = [
+            "id", "title", "course"
+        ]
+
+
+class ModuleDetailSerializer(serializers.ModelSerializer):
+    """Сериализатор для просмотра одного модуля"""
+
+    course = CourseDetailSerializer(read_only=True)
+    quizzes = QuizListSerializer(many=True, read_only=True)
+    lessons = LessonListSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Module
+        fields = "__all__"
+
+
+class ModuleWriteSerializer(serializers.ModelSerializer):
+    """Сериализатор для изменения модуля"""
+
+    class Meta:
+        model = Module
+        fields = "__all__"
+
+
+class IdSerializer(serializers.Serializer):
+    ids = serializers.ListField(child=serializers.IntegerField())
+
+
+class ModuleContentItemSerializer(serializers.Serializer):
+    type = serializers.CharField()
+    obj = serializers.DictField()
+    is_unlocked = serializers.BooleanField()
+
+
+class ModuleDetailWithProgressSerializer(serializers.Serializer):
+    module = ModuleDetailSerializer()
+    content_items = ModuleContentItemSerializer(many=True)
+    completed_lessons = serializers.ListField(child=serializers.IntegerField())
+    completed_quizzes = serializers.ListField(child=serializers.IntegerField())
+    progressbar = serializers.IntegerField()
+
+

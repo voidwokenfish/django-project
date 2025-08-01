@@ -17,7 +17,7 @@ class QuizFactory(factory.django.DjangoModelFactory):
     module = factory.SubFactory(ModuleFactory)
     title = "Тестовый квиз"
     number = 1
-    course_order = 1
+    course_order = factory.Sequence(lambda n: n+1)
     pass_score = 60
 
 

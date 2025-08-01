@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import UpdateView
 
+from server.api.v1.courses.serializers import LessonListSerializer
+from server.api.v1.quizzes.serializers import QuizListSerializer
 from server.apps.courses.models import (Course, Enrollment, Lesson, Module,
                                         Topic, UserLessonCompleted)
 from server.apps.quizzes.models import Quiz, QuizAttempt
@@ -55,16 +57,18 @@ def course_detail(request, pk):
 
 
 def module_detail(request, pk):
+    """Функция-чудовище"""
+
     module = Module.objects.get(pk=pk)
     course = module.course
 
     lessons = list(module.lessons.all())
-    quizzes = list(Quiz.objects.filter(module=module))
+    quizzes = list(module.quizzes.all())
 
     # Объединяем уроки и тесты, сортируя по course_order
     content_items = sorted(
-        [{"type": "lesson", "obj": lesson} for lesson in lessons] +
-        [{"type": "quiz", "obj": quiz} for quiz in quizzes],
+        [{"type": "lesson", "obj": LessonListSerializer(lesson)} for lesson in lessons] +
+        [{"type": "quiz", "obj": QuizListSerializer(quiz)} for quiz in quizzes],
         key=lambda x: x["obj"].course_order
     )
 

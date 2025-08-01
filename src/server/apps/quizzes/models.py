@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class Quiz(models.Model):
-    module = models.ForeignKey(Module, on_delete=models.CASCADE, default=1)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, default=1, related_name='quizzes')
     title = models.CharField(max_length=300)
     number = models.IntegerField()
     course_order = models.IntegerField(default=0)
@@ -45,8 +45,8 @@ class QuizAnswer(models.Model):
         verbose_name_plural = "Ответы квиза"
 
 class QuizAttempt(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="users")
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="attempts")
     date = models.DateField(auto_now_add=True)
     score = models.IntegerField()
 

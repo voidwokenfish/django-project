@@ -1,6 +1,7 @@
+from datetime import date
+
 import factory
 
-from datetime import date
 from server.api.v1.users.tests.factories import UserFactory
 from server.apps.courses.models import (Course, Enrollment, Lesson, Module,
                                         UserLessonCompleted)
@@ -38,6 +39,8 @@ class LessonFactory(factory.django.DjangoModelFactory):
 
     module = factory.SubFactory(ModuleFactory)
     title = factory.Sequence(lambda n: f"Тестовый урок{n}")
+    course_order = factory.Sequence(lambda n: n)
+    number = factory.Sequence(lambda n: n)
 
 
 class EnrollmentFactory(factory.django.DjangoModelFactory):
