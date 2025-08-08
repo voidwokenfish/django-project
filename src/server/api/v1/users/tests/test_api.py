@@ -1,6 +1,10 @@
 import pytest
 from django.contrib.auth import get_user_model
+from rest_framework import status
 from rest_framework.test import APIClient
+
+
+User = get_user_model()
 
 
 @pytest.fixture
@@ -27,5 +31,33 @@ def auth_client(api_client, user):
     return api_client
 
 @pytest.fixture()
-def register_data(db, user):
-    pass
+def valid_register_data(db):
+    """Фикстура с валидными данными для регистрации пользователя."""
+    return {
+        "username": "goblinking",
+        "email": "ofthe@test.test",
+        "password": "Darkstormgalaxy123",
+        "confirm_password": "Darkstormgalaxy123",
+    }
+
+@pytest.fixture()
+def invalid_register_data(db):
+    """Фикстура с невалидными данными для регистрации."""
+    return {
+        "username": "showme",
+        "email": "thechampion@test.test",
+        "password": "OfLight123",
+        "confirm_password": "Illshowyoutheheraldofdarkness",
+    }
+def test_register_success(auth_client, valid_register_data):
+
+    response = auth_client.post('/api/v1/register/', data=valid_register_data, format='json')
+
+    assert response.status_code == status.HTTP_201_CREATED
+
+
+def test_register_failure(auth_client, invalid_register_data):
+
+    response = auth_client.post('/api/v1/register/', data=invalid_register_data, format='json')
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST

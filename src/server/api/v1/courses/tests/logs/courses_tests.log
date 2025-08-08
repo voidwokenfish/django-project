@@ -557,3 +557,226 @@ E       TypeError: 'int' object is not iterable
 test_api.py:152: TypeError
 2025-08-01 15:19:21.113 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content
 2025-08-01 15:20:12.227 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-08 15:07:49.958 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_course_content
+2025-08-08 15:07:49.971 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001798B8DFF40>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_course_content(auth_client, course_data):
+        """Тест course_content на возврат данных о курсе,
+         его модулей и зачислений на него пользователем"""
+    
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/v1/courses/{course.id}/content/")
+    
+        expected_course_data = CourseDetailSerializer(
+            course_data["course"]
+        ).data
+        expected_module_data = ModuleListSerializer(
+            course_data["module"], many=True
+>       ).data
+
+server\api\v1\courses\tests\test_api.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\.venv\lib\site-packages\rest_framework\serializers.py:797: in data
+    ret = super().data
+..\.venv\lib\site-packages\rest_framework\serializers.py:251: in data
+    self._data = self.to_representation(self.instance)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = ModuleListSerializer(<Module: Тестовый модуль0>, many=True):
+    id = IntegerField(label='ID', read_only=True)
+    title = CharField(max_length=200)
+    course = PrimaryKeyRelatedField(queryset=Course.objects.all())
+data = <Module: Тестовый модуль0>
+
+    def to_representation(self, data):
+        """
+        List of object instances -> List of dicts of primitive datatypes.
+        """
+        # Dealing with nested relationships, data can be a Manager,
+        # so, first get a queryset from the Manager if needed
+        iterable = data.all() if isinstance(data, models.manager.BaseManager) else data
+    
+>       return [
+            self.child.to_representation(item) for item in iterable
+        ]
+E       TypeError: 'Module' object is not iterable
+
+..\.venv\lib\site-packages\rest_framework\serializers.py:715: TypeError
+2025-08-08 15:07:50.526 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-08-08 15:07:51.030 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-08 15:12:08.191 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_course_content
+2025-08-08 15:12:08.192 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002D55A78F400>
+course_data = {'course': <Course: Тестовый курс0>, 'course_no_enroll': <Course: Тестовый курс1>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс0, testemail@test.test>], 'lesson': <Lesson: Тестовый урок0, Порядок: 0>, ...}
+
+    def test_get_course_content(auth_client, course_data):
+        """Тест course_content на возврат данных о курсе,
+         его модулей и зачислений на него пользователем"""
+    
+        course = course_data["course"]
+    
+        response = auth_client.get(f"/api/v1/courses/{course.id}/content/")
+    
+        expected_course_data = CourseDetailSerializer(
+            course_data["course"]
+        ).data
+        expected_module_data = ModuleListSerializer(
+            course_data["module"], many=True
+>       ).data
+
+server\api\v1\courses\tests\test_api.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\.venv\lib\site-packages\rest_framework\serializers.py:797: in data
+    ret = super().data
+..\.venv\lib\site-packages\rest_framework\serializers.py:251: in data
+    self._data = self.to_representation(self.instance)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = ModuleListSerializer(<Module: Тестовый модуль0>, many=True):
+    id = IntegerField(label='ID', read_only=True)
+    title = CharField(max_length=200)
+    course = PrimaryKeyRelatedField(queryset=Course.objects.all())
+data = <Module: Тестовый модуль0>
+
+    def to_representation(self, data):
+        """
+        List of object instances -> List of dicts of primitive datatypes.
+        """
+        # Dealing with nested relationships, data can be a Manager,
+        # so, first get a queryset from the Manager if needed
+        iterable = data.all() if isinstance(data, models.manager.BaseManager) else data
+    
+>       return [
+            self.child.to_representation(item) for item in iterable
+        ]
+E       TypeError: 'Module' object is not iterable
+
+..\.venv\lib\site-packages\rest_framework\serializers.py:715: TypeError
+2025-08-08 15:12:08.723 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-08-08 15:12:09.233 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-08 15:15:26.366 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content
+2025-08-08 15:20:49.182 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content
+2025-08-08 15:20:49.652 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-08-08 15:20:50.830 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/courses/tests/test_api.py::test_get_module_content
+2025-08-08 15:20:50.832 | ERROR    | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:28 - self = CharField(max_length=200), instance = [<Module: Тестовый модуль8>]
+
+    def get_attribute(self, instance):
+        """
+        Given the *outgoing* object instance, return the primitive value
+        that should be used for this field.
+        """
+        try:
+>           return get_attribute(instance, self.source_attrs)
+
+..\.venv\lib\site-packages\rest_framework\fields.py:437: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+instance = [<Module: Тестовый модуль8>], attrs = ['title']
+
+    def get_attribute(instance, attrs):
+        """
+        Similar to Python's built in `getattr(instance, attr)`,
+        but takes a list of nested attributes, instead of a single attribute.
+    
+        Also accepts either attribute lookup on objects or dictionary lookups.
+        """
+        for attr in attrs:
+            try:
+                if isinstance(instance, Mapping):
+                    instance = instance[attr]
+                else:
+>                   instance = getattr(instance, attr)
+E                   AttributeError: 'list' object has no attribute 'title'
+
+..\.venv\lib\site-packages\rest_framework\fields.py:104: AttributeError
+
+During handling of the above exception, another exception occurred:
+
+auth_client = <rest_framework.test.APIClient object at 0x000002392D0ABE20>
+course_data = {'course': <Course: Тестовый курс4>, 'course_no_enroll': <Course: Тестовый курс5>, 'enrollments': [<Enrollment: Тестов...il@test.test>, <Enrollment: Тестовый курс4, testemail@test.test>], 'lesson': <Lesson: Тестовый урок2, Порядок: 2>, ...}
+
+    def test_get_module_content(auth_client, course_data):
+        """
+        Проверяет корректность ответа API при запросе контента модуля.
+    
+        Тест выполняет следующие проверки:
+        - Статус ответа должен быть 200 OK.
+        - Данные модуля в ответе совпадают с сериализованными данными модуля из тестовых данных.
+        - В ответе присутствует список элементов контента (content_items) и он не пустой.
+        - Каждый элемент content_items содержит обязательные ключи: 'type', 'obj', 'is_unlocked'.
+        - В ответе есть списки completed_lessons и completed_quizzes, и они являются списками.
+        - В списке completed_quizzes присутствует id пройденного квиза, а id непройденного квиза отсутствует.
+        - Значение прогресс-бара находится в диапазоне от 0 до 100 включительно.
+        """
+    
+        module = course_data["module"]
+        course = course_data["course"]
+    
+        lessons = course_data["lesson"]
+    
+        expected_quiz_id = QuizDetailSerializer(course_data["quiz"]).data["id"]
+        expected_quiz_not_completed_id = QuizDetailSerializer(course_data["quiz_not_completed"]).data["id"]
+    
+>       expected_module = ModuleDetailSerializer(module).data
+
+server\api\v1\courses\tests\test_api.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\.venv\lib\site-packages\rest_framework\serializers.py:573: in data
+    ret = super().data
+..\.venv\lib\site-packages\rest_framework\serializers.py:251: in data
+    self._data = self.to_representation(self.instance)
+..\.venv\lib\site-packages\rest_framework\serializers.py:527: in to_representation
+    attribute = field.get_attribute(instance)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = CharField(max_length=200), instance = [<Module: Тестовый модуль8>]
+
+    def get_attribute(self, instance):
+        """
+        Given the *outgoing* object instance, return the primitive value
+        that should be used for this field.
+        """
+        try:
+            return get_attribute(instance, self.source_attrs)
+        except BuiltinSignatureError as exc:
+            msg = (
+                'Field source for `{serializer}.{field}` maps to a built-in '
+                'function type and is invalid. Define a property or method on '
+                'the `{instance}` instance that wraps the call to the built-in '
+                'function.'.format(
+                    serializer=self.parent.__class__.__name__,
+                    field=self.field_name,
+                    instance=instance.__class__.__name__,
+                )
+            )
+            raise type(exc)(msg)
+        except (KeyError, AttributeError) as exc:
+            if self.default is not empty:
+                return self.get_default()
+            if self.allow_null:
+                return None
+            if not self.required:
+                raise SkipField()
+            msg = (
+                'Got {exc_type} when attempting to get a value for field '
+                '`{field}` on serializer `{serializer}`.\nThe serializer '
+                'field might be named incorrectly and not match '
+                'any attribute or key on the `{instance}` instance.\n'
+                'Original exception text was: {exc}.'.format(
+                    exc_type=type(exc).__name__,
+                    field=self.field_name,
+                    serializer=self.parent.__class__.__name__,
+                    instance=instance.__class__.__name__,
+                    exc=exc
+                )
+            )
+>           raise type(exc)(msg)
+E           AttributeError: Got AttributeError when attempting to get a value for field `title` on serializer `ModuleDetailSerializer`.
+E           The serializer field might be named incorrectly and not match any attribute or key on the `list` instance.
+E           Original exception text was: 'list' object has no attribute 'title'.
+
+..\.venv\lib\site-packages\rest_framework\fields.py:470: AttributeError
+2025-08-08 15:23:19.494 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content
+2025-08-08 15:23:19.964 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_course_content_no_enrollments
+2025-08-08 15:23:20.453 | SUCCESS  | server.api.v1.courses.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/courses/tests/test_api.py::test_get_module_content

@@ -1,0 +1,1153 @@
+2025-08-07 16:23:41.312 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:23:41.312 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000015CBB8FBB20>
+register_data = None
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=register_data)
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 404 == 201
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:50: AssertionError
+2025-08-07 16:24:15.780 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:24:15.780 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000189464EFC40>
+register_data = None
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/users/register/', data=register_data)
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 405 == 201
+E        +  where 405 = <Response status_code=405, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:50: AssertionError
+2025-08-07 16:25:52.316 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:25:52.317 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000290B7BDFA30>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/users/register/', data=register_data)
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 405 == 201
+E        +  where 405 = <Response status_code=405, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:60: AssertionError
+2025-08-07 16:31:56.331 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:31:56.353 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000146E786B130>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=register_data)
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 404 == 201
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:60: AssertionError
+2025-08-07 16:35:23.851 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:35:23.853 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\base.py:181: in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\base.py:313: in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <URLResolver 'urls' (None:None) '^/'>, path = 'register/'
+
+    def resolve(self, path):
+        path = str(path)  # path may be a reverse_lazy object
+        tried = []
+        match = self.pattern.match(path)
+        if match:
+            new_path, args, kwargs = match
+            for pattern in self.url_patterns:
+                try:
+                    sub_match = pattern.resolve(new_path)
+                except Resolver404 as e:
+                    self._extend_tried(tried, pattern, e.args[0].get("tried"))
+                else:
+                    if sub_match:
+                        # Merge captured arguments in match with submatch
+                        sub_match_dict = {**kwargs, **self.default_kwargs}
+                        # Update the sub_match_dict with the kwargs from the sub_match.
+                        sub_match_dict.update(sub_match.kwargs)
+                        # If there are *any* named groups, ignore all non-named groups.
+                        # Otherwise, pass all non-named arguments as positional
+                        # arguments.
+                        sub_match_args = sub_match.args
+                        if not sub_match_dict:
+                            sub_match_args = args + sub_match.args
+                        current_route = (
+                            ""
+                            if isinstance(pattern, URLPattern)
+                            else str(pattern.pattern)
+                        )
+                        self._extend_tried(tried, pattern, sub_match.tried)
+                        return ResolverMatch(
+                            sub_match.func,
+                            sub_match_args,
+                            sub_match_dict,
+                            sub_match.url_name,
+                            [self.app_name] + sub_match.app_names,
+                            [self.namespace] + sub_match.namespaces,
+                            self._join_route(current_route, sub_match.route),
+                            tried,
+                            captured_kwargs=sub_match.captured_kwargs,
+                            extra_kwargs={
+                                **self.default_kwargs,
+                                **sub_match.extra_kwargs,
+                            },
+                        )
+                    tried.append([pattern])
+            raise Resolver404({"tried": tried, "path": new_path})
+>       raise Resolver404({"path": path})
+E       django.urls.exceptions.Resolver404: {'path': 'register/'}
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:706: Resolver404
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+resolver = <URLResolver 'urls' (None:None) '^/'>, status_code = 404
+exception = Resolver404({'path': 'register/'})
+
+    def get_exception_response(request, resolver, status_code, exception):
+        try:
+>           callback = resolver.resolve_error_handler(status_code)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:163: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\deprecation.py:129: in __call__
+    response = response or self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:68: in response_for_exception
+    response = get_exception_response(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:167: in get_exception_response
+    response = handle_uncaught_exception(request, resolver, sys.exc_info())
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\deprecation.py:129: in __call__
+    response = response or self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:140: in response_for_exception
+    response = handle_uncaught_exception(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\deprecation.py:129: in __call__
+    response = response or self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:140: in response_for_exception
+    response = handle_uncaught_exception(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\deprecation.py:129: in __call__
+    response = response or self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:140: in response_for_exception
+    response = handle_uncaught_exception(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\deprecation.py:129: in __call__
+    response = response or self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:140: in response_for_exception
+    response = handle_uncaught_exception(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\deprecation.py:129: in __call__
+    response = response or self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:140: in response_for_exception
+    response = handle_uncaught_exception(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+request = <WSGIRequest: POST '/register'>
+
+    @wraps(get_response)
+    def inner(request):
+        try:
+>           response = get_response(request)
+
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\deprecation.py:129: in __call__
+    response = response or self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:140: in response_for_exception
+    response = handle_uncaught_exception(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+
+During handling of the above exception, another exception occurred:
+
+auth_client = <rest_framework.test.APIClient object at 0x0000022A20AABCD0>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+>       response = auth_client.post('register/', data=register_data)
+
+test_api.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\..\..\.venv\lib\site-packages\rest_framework\test.py:299: in post
+    response = super().post(
+..\..\..\..\..\..\.venv\lib\site-packages\rest_framework\test.py:213: in post
+    return self.generic('POST', path, data, content_type, **extra)
+..\..\..\..\..\..\.venv\lib\site-packages\rest_framework\test.py:237: in generic
+    return super().generic(
+..\..\..\..\..\..\.venv\lib\site-packages\django\test\client.py:676: in generic
+    return self.request(**r)
+..\..\..\..\..\..\.venv\lib\site-packages\rest_framework\test.py:289: in request
+    return super().request(**kwargs)
+..\..\..\..\..\..\.venv\lib\site-packages\rest_framework\test.py:241: in request
+    request = super().request(**kwargs)
+..\..\..\..\..\..\.venv\lib\site-packages\django\test\client.py:1087: in request
+    response = self.handler(environ)
+..\..\..\..\..\..\.venv\lib\site-packages\django\test\client.py:186: in __call__
+    response = self.get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\rest_framework\test.py:261: in get_response
+    return super().get_response(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\base.py:140: in get_response
+    response = self._middleware_chain(request)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:57: in inner
+    response = response_for_exception(request, exc)
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:140: in response_for_exception
+    response = handle_uncaught_exception(
+..\..\..\..\..\..\.venv\lib\site-packages\django\core\handlers\exception.py:184: in handle_uncaught_exception
+    callback = resolver.resolve_error_handler(500)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:732: in resolve_error_handler
+    callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
+..\..\..\..\..\..\.venv\lib\site-packages\django\utils\functional.py:47: in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\resolvers.py:711: in urlconf_module
+    return import_module(self.urlconf_name)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1050: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1027: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1006: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:688: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:883: in exec_module
+    ???
+<frozen importlib._bootstrap>:241: in _call_with_frames_removed
+    ???
+..\..\..\..\..\urls.py:8: in <module>
+    path('api/', include('server.api.urls')),
+..\..\..\..\..\..\.venv\lib\site-packages\django\urls\conf.py:39: in include
+    urlconf_module = import_module(urlconf_module)
+C:\Users\Admin\AppData\Local\Programs\Python\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1050: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1027: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1006: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:688: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:883: in exec_module
+    ???
+<frozen importlib._bootstrap>:241: in _call_with_frames_removed
+    ???
+..\..\..\urls.py:6: in <module>
+    from server.api.v1 import urls as urls_v1
+..\..\urls.py:6: in <module>
+    from server.api.v1.users.urls import router as users_router
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    from rest_framework.routers import DefaultRouter
+    
+    from django.urls import path
+    
+>   from server.api.v1.users.views import ProfileViewSet, UserViewSet, RegisterView
+E     File "D:\Python\django-project\django-project\src\server\api\v1\users\views.py", line 94
+E       status = e.
+E                  ^
+E   SyntaxError: invalid syntax
+
+..\urls.py:5: SyntaxError
+2025-08-07 16:36:48.843 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:36:48.844 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001E0335CF9D0>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('register/', data=register_data)
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 404 == 201
+E        +  where 404 = <HttpResponseNotFound status_code=404, "text/html; charset=utf-8">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:60: AssertionError
+2025-08-07 16:51:29.749 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:51:29.757 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002254E7BF5B0>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=register_data)
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:60: AssertionError
+2025-08-07 16:52:56.366 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:52:56.366 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002190243F130>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=register_data)
+        print(response.json)
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:60: AssertionError
+2025-08-07 16:53:38.901 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:53:38.901 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000012E2762A140>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=register_data)
+        print("Errors:", response.json())
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:60: AssertionError
+2025-08-07 16:59:17.931 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 16:59:17.948 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000024E5C3BB5E0>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:64: AssertionError
+2025-08-07 17:02:04.450 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 17:02:04.450 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002541101FBB0>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+        # assert response.status_code == status.HTTP_201_CREATED
+>       assert False, response.json()
+E       AssertionError: {'email': ['Почта уже зарегистрирована.']}
+E       assert False
+
+test_api.py:65: AssertionError
+2025-08-07 17:02:44.666 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-07 17:02:44.666 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001B8E9C2F580>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+        # assert response.status_code == status.HTTP_201_CREATED
+>       assert False, response.json()
+E       AssertionError: {'error': "Произошла ошибка: 'str' object has no attribute 'pop'"}
+E       assert False
+
+test_api.py:65: AssertionError
+2025-08-08 09:49:14.170 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 09:49:14.187 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000180C277F340>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+        # assert response.status_code == status.HTTP_201_CREATED
+>       assert False, response.json()
+E       AssertionError: {'error': "Произошла ошибка: 'str' object has no attribute 'pop'"}
+E       assert False
+
+test_api.py:65: AssertionError
+2025-08-08 09:55:45.335 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 09:55:45.336 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000182C3C6B130>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+        # assert response.status_code == status.HTTP_201_CREATED
+>       assert False, response.json()
+E       AssertionError: Позьзователь успешно создан
+E       assert False
+
+test_api.py:65: AssertionError
+2025-08-08 10:09:12.885 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_api.py::test_register_failure
+2025-08-08 10:09:26.462 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:09:26.463 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001DFAF1FF340>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:64: AssertionError
+2025-08-08 10:12:45.543 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:12:45.544 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001A54A78FC70>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'Testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:65: AssertionError
+2025-08-08 10:13:19.391 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:13:19.392 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001D5FE74BCA0>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'Testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+    
+        assert response.json()
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:66: AssertionError
+2025-08-08 10:13:34.370 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:13:34.371 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000179BF98F4C0>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'Testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+    
+>       assert False, response.json()
+E       AssertionError: {'non_field_errors': ['']}
+E       assert False
+
+test_api.py:65: AssertionError
+2025-08-08 10:14:00.619 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:14:00.619 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000203BA78A350>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'Testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+    
+>       assert False, response.json()
+E       AssertionError: {'non_field_errors': ['']}
+E       assert False
+
+test_api.py:65: AssertionError
+2025-08-08 10:17:48.980 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:17:48.981 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001FAD30AF610>
+register_data = {'bad_p_confirm': 'gege2', 'bad_password': 'gege2', 'confirm_password': 'Testpword123', 'email': 'testemail123@test.test', ...}
+
+    def test_register_success(auth_client, register_data):
+    
+        response = auth_client.post('/api/v1/register/', data={
+            "username": register_data["username"],
+            "email": register_data["email"],
+            "password": register_data["password"],
+            "confirm_password": register_data["confirm_password"],
+        })
+    
+>       assert False, response.json()
+E       AssertionError: {'non_field_errors': ['Пароли не совпадают.']}
+E       assert False
+
+test_api.py:66: AssertionError
+2025-08-08 10:23:49.852 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:23:49.853 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000201218DB7C0>
+valid_register_data = {'confirm_password': 'Darkstormgalaxy123', 'email': 'ofthe@test.test', 'password': 'Darkstormgalaxy123', 'username': 'goblinking'}
+
+    def test_register_success(auth_client, valid_register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=valid_register_data)
+    
+>       assert response.status_code == status.HTTP_201_CREATED
+E       assert 400 == 201
+E        +  where 400 = <Response status_code=400, "application/json">.status_code
+E        +  and   201 = status.HTTP_201_CREATED
+
+test_api.py:56: AssertionError
+2025-08-08 10:24:20.523 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:24:20.523 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x0000022C49CCF520>
+valid_register_data = {'confirm_password': 'Darkstormgalaxy123', 'email': 'ofthe@test.test', 'password': 'Darkstormgalaxy123', 'username': 'goblinking'}
+
+    def test_register_success(auth_client, valid_register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=valid_register_data)
+    
+>       assert False, response.json()
+E       AssertionError: {'non_field_errors': ['Пароли не совпадают.']}
+E       assert False
+
+test_api.py:56: AssertionError
+2025-08-08 10:27:18.692 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:27:18.692 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000002017931F490>
+valid_register_data = {'confirm_password': 'Darkstormgalaxy123', 'email': 'ofthe@test.test', 'password': 'Darkstormgalaxy123', 'username': 'goblinking'}
+
+    def test_register_success(auth_client, valid_register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=valid_register_data, format='json')
+    
+>       assert False, response.json()
+E       AssertionError: {'non_field_errors': ['Пароли не совпадают.']}
+E       assert False
+
+test_api.py:56: AssertionError
+2025-08-08 10:28:16.356 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:28:16.356 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x00000234DACF7880>
+valid_register_data = {'confirm_password': 'Darkstormgalaxy123', 'email': 'ofthe@test.test', 'password': 'Darkstormgalaxy123', 'username': 'goblinking'}
+
+    def test_register_success(auth_client, valid_register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=valid_register_data, format='json')
+    
+>       assert False, response.json()
+E       AssertionError: {'non_field_errors': ['Пароли не совпадают. None и Darkstormgalaxy123']}
+E       assert False
+
+test_api.py:56: AssertionError
+2025-08-08 10:30:12.906 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:30:12.906 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - auth_client = <rest_framework.test.APIClient object at 0x000001C7B7F2BCD0>
+valid_register_data = {'confirm_password': 'Darkstormgalaxy123', 'email': 'ofthe@test.test', 'password': 'Darkstormgalaxy123', 'username': 'goblinking'}
+
+    def test_register_success(auth_client, valid_register_data):
+    
+        response = auth_client.post('/api/v1/register/', data=valid_register_data, format='json')
+    
+>       assert False, response.json()
+E       AssertionError: Позьзователь успешно создан
+E       assert False
+
+test_api.py:56: AssertionError
+2025-08-08 10:30:36.226 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_api.py::test_register_success
+2025-08-08 10:30:41.157 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_api.py::test_register_failure
+2025-08-08 11:27:19.491 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_serializers.py::test_register_serializer_valid_data
+2025-08-08 11:27:19.509 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - @pytest.mark.django_db
+    def test_register_serializer_valid_data():
+    
+        data = {
+            'username': 'NicolasCage',
+            'email': 'IamTheBestActor@best.actor',
+            'password': 'Cagebestactor123',
+            'confirm_password': 'Cagebestactor123',
+        }
+    
+        serializer = RegisterSerializer(data=data)
+        assert serializer.is_valid()
+    
+        user = serializer.save()
+    
+        assert user.username == data['username']
+>       assert user.check_email(data['password'])
+E       AttributeError: 'User' object has no attribute 'check_email'
+
+test_serializers.py:24: AttributeError
+2025-08-08 11:27:59.798 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_valid_data
+2025-08-08 13:07:35.414 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_email
+2025-08-08 13:09:25.272 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 13:09:25.272 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - @pytest.mark.django_db
+    def test_register_serializer_duplicate_username():
+        data = {
+            'username': 'NicolasCage',
+            'email': 'IamTheBestActor@best.actor',
+            'password': 'Cagebestactor123',
+            'confirm_password': 'Cagebestactor123',
+        }
+        serializer = RegisterSerializer(data=data)
+        is_valid = serializer.is_valid()
+        serializer.save()
+        serializer = RegisterSerializer(data=data)
+    
+>       assert not is_valid
+E       assert not True
+
+test_serializers.py:63: AssertionError
+2025-08-08 13:10:01.283 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:26 - Ошибка server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 13:10:01.284 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:28 - @pytest.mark.django_db
+    def test_register_serializer_duplicate_username():
+        data = {
+            'username': 'NicolasCage',
+            'email': 'IamTheBestActor@best.actor',
+            'password': 'Cagebestactor123',
+            'confirm_password': 'Cagebestactor123',
+        }
+        serializer = RegisterSerializer(data=data)
+>       serializer.save()
+
+test_serializers.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = RegisterSerializer(data={'username': 'NicolasCage', 'email': 'IamTheBestActor@best.actor', 'password': 'Cagebestactor1...d=True, write_only=True)
+    confirm_password = CharField(max_length=128, min_length=8, required=True, write_only=True)
+kwargs = {}
+
+    def save(self, **kwargs):
+>       assert hasattr(self, '_errors'), (
+            'You must call `.is_valid()` before calling `.save()`.'
+        )
+E       AssertionError: You must call `.is_valid()` before calling `.save()`.
+
+..\..\..\..\..\..\.venv\lib\site-packages\rest_framework\serializers.py:178: AssertionError
+2025-08-08 13:10:27.065 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 13:12:21.329 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 13:16:03.178 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 13:17:52.194 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 13:20:53.024 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 13:37:28.533 | INFO     | server.api.v1.users.tests.test_serializers:test_register_serializer_duplicate_username:66 - Validation errors: {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}
+2025-08-08 13:37:28.534 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:32 - Успешно server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username
+2025-08-08 14:59:15.383 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:00:19.607 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:39 - Ошибка Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_email, данные: {}
+2025-08-08 15:00:19.607 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:41 - @pytest.mark.django_db
+    def test_register_serializer_duplicate_email():
+        data = {
+            'username': 'NicolasCage',
+            'email': 'IamTheBestActor@best.actor',
+            'password': 'Cagebestactor123',
+            'confirm_password': 'Cagebestactor123',
+        }
+    
+        serializer = RegisterSerializer(data=data)
+        is_valid = serializer.is_valid()
+        serializer.save()
+        serializer = RegisterSerializer(data=data)
+        is_valid = serializer.is_valid()
+    
+>       test_log_data['validation_errors'] = serializer.errors
+E       NameError: name 'test_log_data' is not defined
+
+test_serializers.py:43: NameError
+2025-08-08 15:00:51.236 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_email, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:02:18.466 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_email, данные: {'validation_errors': {'email': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:03:33.396 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:07:55.253 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_success, данные: {}
+2025-08-08 15:07:55.732 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_failure, данные: {}
+2025-08-08 15:07:56.646 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_valid_data, данные: {}
+2025-08-08 15:07:57.108 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_email, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:07:57.114 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_email, данные: {'validation_errors': {'email': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:07:57.578 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:07:57.582 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:07:57.588 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Обязательное поле.', code='required')], 'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:07:57.593 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')], 'confirm_password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')]}}
+2025-08-08 15:07:57.598 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_confirm_password, данные: {'validation_errors': {'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:07:57.607 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:39 - Ошибка Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_confirm_password, данные: {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+2025-08-08 15:07:57.608 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:41 - test_log_data = {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+
+    @pytest.mark.django_db
+    def test_register_serializer_bad_confirm_password(test_log_data):
+        data = {
+            'username': 'NicolasCage',
+            'email': 'IamTheBestActor@best.actor',
+            'password': 'Cagebestactor123',
+            'confirm_password': 'cagebestctor123',
+        }
+        serializer = RegisterSerializer(data=data)
+        is_valid = serializer.is_valid()
+    
+        test_log_data['validation_errors'] = serializer.errors
+    
+        assert not is_valid
+>       assert "confirm_password" in serializer.errors
+E       AssertionError: assert 'confirm_password' in {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}
+E        +  where {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]} = RegisterSerializer(data={'username': 'NicolasCage', 'email': 'IamTheBestActor@best.actor', 'password': 'Cagebestactor1...d=True, write_only=True)\n    confirm_password = CharField(max_length=128, min_length=8, required=True, write_only=True).errors
+
+server\api\v1\users\tests\test_serializers.py:164: AssertionError
+2025-08-08 15:12:13.500 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_success, данные: {}
+2025-08-08 15:12:13.963 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_failure, данные: {}
+2025-08-08 15:12:14.910 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_valid_data, данные: {}
+2025-08-08 15:12:15.369 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_email, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:12:15.374 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_email, данные: {'validation_errors': {'email': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:12:15.832 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:12:15.837 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:12:15.842 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Обязательное поле.', code='required')], 'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:12:15.848 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')], 'confirm_password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')]}}
+2025-08-08 15:12:15.855 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_confirm_password, данные: {'validation_errors': {'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:12:15.863 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:39 - Ошибка Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_confirm_password, данные: {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+2025-08-08 15:12:15.865 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:41 - test_log_data = {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+
+    @pytest.mark.django_db
+    def test_register_serializer_bad_confirm_password(test_log_data):
+        data = {
+            'username': 'NicolasCage',
+            'email': 'IamTheBestActor@best.actor',
+            'password': 'Cagebestactor123',
+            'confirm_password': 'cagebestctor123',
+        }
+        serializer = RegisterSerializer(data=data)
+        is_valid = serializer.is_valid()
+    
+        test_log_data['validation_errors'] = serializer.errors
+    
+        assert not is_valid
+>       assert "confirm_password" in serializer.errors
+E       AssertionError: assert 'confirm_password' in {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}
+E        +  where {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]} = RegisterSerializer(data={'username': 'NicolasCage', 'email': 'IamTheBestActor@best.actor', 'password': 'Cagebestactor1...d=True, write_only=True)\n    confirm_password = CharField(max_length=128, min_length=8, required=True, write_only=True).errors
+
+server\api\v1\users\tests\test_serializers.py:164: AssertionError
+2025-08-08 15:15:33.094 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:39 - Ошибка Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_confirm_password, данные: {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+2025-08-08 15:15:33.095 | ERROR    | server.api.v1.users.tests.conftest:pytest_runtest_logreport:41 - test_log_data = {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+
+    @pytest.mark.django_db
+    def test_register_serializer_bad_confirm_password(test_log_data):
+        data = {
+            'username': 'NicolasCage',
+            'email': 'IamTheBestActor@best.actor',
+            'password': 'Cagebestactor123',
+            'confirm_password': 'cagebestctor123',
+        }
+        serializer = RegisterSerializer(data=data)
+        is_valid = serializer.is_valid()
+    
+        test_log_data['validation_errors'] = serializer.errors
+    
+        assert not is_valid
+>       assert "confirm_password" in serializer.errors
+E       AssertionError: assert 'confirm_password' in {'non_field_errors': [ErrorDetail(string='\u041f\u0430\u0440\u043e\u043b\u0438 \u043d\u0435 \u0441\u043e\u0432\u043f\u0430\u0434\u0430\u044e\u0442.', code='invalid')]}
+E        +  where {'non_field_errors': [ErrorDetail(string='\u041f\u0430\u0440\u043e\u043b\u0438 \u043d\u0435 \u0441\u043e\u0432\u043f\u0430\u0434\u0430\u044e\u0442.', code='invalid')]} = RegisterSerializer(data={'username': 'NicolasCage', 'email': 'IamTheBestActor@best.actor', 'password': 'Cagebestactor123', 'confirm_password': 'cagebestctor123'}):\n    username = CharField(max_length=50, required=True)\n    email = EmailField(required=True)\n    password = CharField(max_length=128, min_length=8, required=True, write_only=True)\n    confirm_password = CharField(max_length=128, min_length=8, required=True, write_only=True).errors
+
+test_serializers.py:164: AssertionError
+2025-08-08 15:20:38.440 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_confirm_password, данные: {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+2025-08-08 15:20:55.096 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_success, данные: {}
+2025-08-08 15:20:55.558 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_failure, данные: {}
+2025-08-08 15:20:56.479 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_valid_data, данные: {}
+2025-08-08 15:20:56.938 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_email, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:20:56.943 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_email, данные: {'validation_errors': {'email': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:20:57.400 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:20:57.405 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:20:57.410 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Обязательное поле.', code='required')], 'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:20:57.415 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')], 'confirm_password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')]}}
+2025-08-08 15:20:57.421 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_confirm_password, данные: {'validation_errors': {'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:20:57.427 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_confirm_password, данные: {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}
+2025-08-08 15:23:24.591 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_success, данные: {}
+2025-08-08 15:23:25.050 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_api.py::test_register_failure, данные: {}
+2025-08-08 15:23:25.958 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_valid_data, данные: {}
+2025-08-08 15:23:26.420 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_email, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:23:26.424 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_email, данные: {'validation_errors': {'email': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:23:26.884 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_duplicate_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Пользователь с таким юзернеймом уже существует.', code='invalid')], 'email': [ErrorDetail(string='Почта уже зарегистрирована.', code='invalid')]}}
+2025-08-08 15:23:26.889 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_username, данные: {'validation_errors': {'username': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:23:26.893 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Обязательное поле.', code='required')], 'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:23:26.899 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_password, данные: {'validation_errors': {'password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')], 'confirm_password': [ErrorDetail(string='Убедитесь, что это значение содержит не менее 8 символов.', code='min_length')]}}
+2025-08-08 15:23:26.904 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_missing_confirm_password, данные: {'validation_errors': {'confirm_password': [ErrorDetail(string='Обязательное поле.', code='required')]}}
+2025-08-08 15:23:26.909 | SUCCESS  | server.api.v1.users.tests.conftest:pytest_runtest_logreport:45 - Успешно Тест: server/api/v1/users/tests/test_serializers.py::test_register_serializer_bad_confirm_password, данные: {'validation_errors': {'non_field_errors': [ErrorDetail(string='Пароли не совпадают.', code='invalid')]}}

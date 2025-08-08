@@ -15,7 +15,9 @@ from server.api.v1.quizzes.tests.factories import QuizFactory
 from server.apps.courses.models import UserLessonCompleted
 from server.apps.quizzes.models import QuizAttempt
 
+
 User = get_user_model()
+
 
 @pytest.fixture
 def api_client():
@@ -85,7 +87,7 @@ def test_get_course_content(auth_client, course_data):
         course_data["course"]
     ).data
     expected_module_data = ModuleListSerializer(
-        course_data["module"], many=True
+        [course_data["module"]], many=True
     ).data
     expected_enrollment_data = EnrollmentSerializer(
         course_data["enrollments"], many=True

@@ -16,17 +16,30 @@ logger.add(
     filter=lambda record: "users" in record["extra"].get("source", "")
 )
 
+@pytest.fixture
+def test_log_data():
+    return {}
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    if rep.when == "call":
+        rep.test_log_data = getattr(item.funcargs.get("test_log_data", {}), "copy", lambda: {})()
+
 @pytest.hookimpl(tryfirst=True)
 def pytest_runtest_logreport(report):
     if report.when == "call":
 
         source = report.nodeid
+        test_log_data = getattr(report, "test_log_data", None) or {}
+        message = f"Тест: {source}, данные: {test_log_data}"
 
         if report.failed:
-            logger.bind(source=source).error(f"Ошибка {report.nodeid}")
+            logger.bind(source=source).error(f"Ошибка {message}")
             if report.longrepr:
                 logger.bind(source=source).error(str(report.longrepr))
         elif report.skipped:
-            logger.bind(source=source).warning(f"Пропущено {report.nodeid}")
+            logger.bind(source=source).warning(f"Пропущено {message}")
         else:
-            logger.bind(source=source).success(f"Успешно {report.nodeid}")
+            logger.bind(source=source).success(f"Успешно {message}")

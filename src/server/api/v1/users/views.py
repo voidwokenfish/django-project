@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import filters, permissions, status, viewsets
+from rest_framework.exceptions import APIException
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,7 +12,7 @@ from server.api.core.pagination.base import StandardPagePagination
 from server.api.v1.users.serializers import (ProfileSerializer,
                                              UserDetailSerializer,
                                              UserListSerializer,
-                                             UserWriteSerializer, RegisterSerializer)
+                                             UserWriteSerializer, RegisterSerializer, LoginSerializer)
 from server.apps.users.models import Profile, User
 
 
@@ -84,9 +85,35 @@ class RegisterView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response("Позьзователь успешно создан", status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = RegisterSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response("Позьзователь успешно создан", status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except APIException as e:
+            return Response({'error': f"Произошла ошибка: {str(e.detail)}"}, status=e.status_code)
+        except Exception as e:
+            return Response({'error': f"Произошла ошибка: {str(e)}"}, status=500)
+
+
+class LoginView(APIView):
+    """"""
+
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        try:
+            serializer = LoginSerializer(data=request.data)
+            if serializer.is_valid():
+                return Response("Данные для входа верны.", status=status.HTTP_200_OK)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+        except APIException as e:
+            return Response({'error': f"Произошла ошибка: {str(e.detail)}"}, status=e.status_code)
+
+        except Exception as e:
+            return Response({'error': f"Произошла ошибка: {str(e)}"}, status=500)
 

@@ -28,7 +28,7 @@ def index(request, topic_id=None, page_number=1):
         courses = Course.objects.filter(topics=topic_id)
     else:
         courses = Course.objects.all()
-
+    profile=None
     per_page = 12
     paginator = Paginator(courses, per_page)
     courses_paginator = paginator.page(page_number)
